@@ -1,0 +1,476 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\geometry{letterpaper, margin=1in}
+
+\title{Capítulos 1 y 2}
+\author{José Manuel Martínez Durán}
+\date{2026}
+
+\begin{document}
+
+% --- PÁGINA DE DERECHOS DE AUTOR ---
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+\doublespacing
+Derechos de autor \\
+por \\
+José Manuel Martínez Durán \\
+2026
+\end{center}
+\vspace*{\fill}
+\newpage
+
+% --- PÁGINA EN BLANCO ---
+\thispagestyle{empty}
+\mbox{}
+\newpage
+
+% --- PÁGINA DE TÍTULO / DISERTACIÓN ---
+\thispagestyle{empty}
+\begin{center}
+\doublespacing
+\textbf{Inteligencia artificial generativa paramétrica aplicada a la \\ composición musical} \\
+\vspace{1em}
+por \\
+\vspace{1em}
+\textbf{José Manuel Martínez Durán, MVR} \\
+\vspace{2em}
+Disertación \\
+Presentada a la División de Posgrado de \\
+La Universidad Da Vinci \\
+en cumplimiento parcial \\
+de los requisitos \\
+para la obtención del grado de \\
+Doctorado en Ingeniería en Sistemas Computacionales \\
+\vspace{2em}
+Universidad Da Vinci \\
+Febrero 2026
+\end{center}
+\vspace*{\fill}
+\newpage
+
+% --- PÁGINA DE APROBACIÓN ---
+\thispagestyle{empty}
+\begin{center}
+\doublespacing
+Inteligencia artificial generativa paramétrica aplicada a la \\ composición musical \\
+\vspace{2em}
+Aprobada por \\
+Comité de Disertación: \\
+\vspace{1em}
+Dr. Agustin Santiago Alvarado, Supervisor \\
+Dr. Pedro Damián Reyes \\
+Dr. José Aníbal Arias Aguilar
+\end{center}
+\newpage
+
+% --- PÁGINA EN BLANCO ---
+\thispagestyle{empty}
+\mbox{}
+\newpage
+
+% --- RESUMEN ---
+\newpage
+\begin{center}
+\doublespacing
+\textbf{Inteligencia artificial generativa paramétrica aplicada a la \\ composición musical} \\
+\vspace{1em}
+\textbf{José Manuel Martínez Durán, DSC} \\
+Universidad Da Vinci, 2026 \\
+Supervisor: Agustín Santiago Alvarado
+\end{center}
+\vspace{1em}
+\begin{quote}
+\doublespacing
+Resumen: La presente investigación, aborda una problemática en el campo de la composición musical asistida por inteligencia artificial: la falta de control determinista y coherencia teórica en los modelos actuales. Los sistemas contemporáneos, basados mayoritariamente en el procesamiento de señales de audio o modelos de lenguaje secuenciales, operan como "cajas negras" que impiden la parametrización de variables estructurales esenciales como la tonalidad, el modo y la métrica. Además, su salida en formato de audio dificulta la edición profesional, ignorando las reglas de la armonía funcional y el contrapunto inherentes al razonamiento humano.
+
+El objetivo central es evaluar en qué medida una arquitectura híbrida de aprendizaje automático, sustentada en un sistema de representación matricial relativa, permite la generación de composiciones musicales simbólicas, paramétricas y estructuralmente coherentes. La propuesta se fundamenta en tres pilares tecnológicos: Algoritmos Genéticos para la evolución de estilos basados en la preferencia del compositor; Árboles de Decisión que actúan como filtros deterministas para imponer restricciones técnicas "duras" (evitando errores como quintas paralelas o resoluciones incorrectas) ; y Redes Neuronales como generadores primarios de material melódico y armónico.
+\end{quote}
+\vspace*{\fill}
+\newpage
+
+% --- ÍNDICES ---
+\tableofcontents \newpage
+\listoftables \newpage
+\listoffigures \newpage
+
+% --- CUERPO DEL DOCUMENTO ---
+\doublespacing
+
+\chapter{Planteamiento del Problema}
+
+\section{Definición del Problema}
+En los últimos años, los Modelos de Lenguaje de Gran Escala (LLM, por sus siglas en inglés) han transformado radicalmente el panorama de la Inteligencia Artificial, democratizando la creación de contenido en diversos dominios \cite{sengar2025}. En el ámbito musical, esta tendencia ha dado lugar a plataformas que generan composiciones completas a partir de descripciones textuales, tales como Suno o Udio, e incluso modelos capaces de transformar tarareos informales en arreglos instrumentales complejos o sintetizar voces que interpretan letras específicas con un realismo sorprendente \cite{wei2024}. No obstante, a pesar de su impacto mediático y su utilidad en la industria publicitaria y de contenidos rápidos, la mayoría de estos sistemas se centran en la producción de audio final (forma de onda), omitiendo la generación de notación musical simbólica editable. Esta carencia limita su uso en la composición profesional, donde la precisión técnica y la posibilidad de refinamiento mediante partituras son fundamentales \cite{batlle2024}.
+
+Los modelos actuales de Inteligencia Artificial Generativa Musical, predominantemente basados en el procesamiento de señales de audio o modelos de lenguaje secuenciales, presentan limitaciones significativas para su integración en flujos de trabajo de composición profesional. Estos sistemas operan frecuentemente como "cajas negras" que impiden la parametrización explícita de variables estructurales críticas, tales como tonalidad, métrica, modo y función armónica \cite{fernandez2023}.
+
+Adicionalmente, la salida de estos modelos suele ser en formato de onda de audio, lo que obstaculiza su edición y requiere procesos complejos de transcripción para su uso instrumental. Desde la perspectiva del entrenamiento, las representaciones de datos utilizadas (formas de onda o secuencias planas de notas) no capturan la semántica profunda de la música, ignorando las reglas de la armonía funcional y el contrapunto inherentes al razonamiento de un compositor humano \cite{kaliakatsos2020}.
+
+\section{Preguntas de Investigación}
+
+\subsection{Pregunta General}
+¿En qué medida una arquitectura híbrida de aprendizaje automático, entrenada mediante un sistema de representación matricial relativa de armonía funcional, permite la generación de composiciones musicales paramétricas y estructuralmente coherentes?
+
+\subsection{Preguntas Específicas}
+\begin{itemize}
+    \item ¿Cómo mejora la representación matricial relativa la capacidad del modelo para aprender y replicar funciones armónicas y contrapuntísticas en comparación con representaciones absolutas lineales?
+    \item ¿De qué manera la integración de árboles de decisión y algoritmos genéticos permite controlar eficazmente los parámetros de composición (tonalidad, modo, métrica) sobre la salida generativa?
+    \item ¿Cómo afecta la imposición de restricciones estrictas (reglas de armonía) mediante árboles de decisión a la creatividad o varianza de las melodías generadas por el algoritmo genético?
+\end{itemize}
+
+\section{Propósito y Objetivos del Estudio}
+El propósito fundamental de esta investigación es cerrar la brecha entre la generación estocástica de audio y la composición técnica profesional. El objetivo general busca desarrollar y validar una arquitectura híbrida de inteligencia artificial que, mediante el uso de representaciones matriciales relativas, garantice la generación de música simbólica estructuralmente coherente y teóricamente correcta.
+
+Para alcanzar esto, los objetivos específicos se centran en tres etapas críticas: primero, la formalización matemática del algoritmo de conversión matricial, asegurando que la jerarquía armónica sea capturada fielmente; segundo, la implementación modular de un sistema que integre redes neuronales para la creatividad melódica con árboles de decisión para el rigor técnico y algoritmos genéticos para la evolución estilística; y finalmente, la realización de un análisis comparativo exhaustivo que contraste la salida del sistema propuesto frente a modelos tradicionales, evaluando la reducción de errores armónicos y la versatilidad del control paramétrico por parte del usuario.
+
+\section{Justificación de la Investigación}
+La relevancia de este estudio se sustenta en la transición necesaria de la inteligencia artificial como una herramienta de generación cerrada hacia un asistente creativo transparente y controlable. Actualmente, la industria musical demanda soluciones que no solo produzcan resultados estéticamente agradables, sino que respeten las leyes de la armonía funcional y el contrapunto, permitiendo a los compositores interactuar con el modelo en un nivel semántico profundo. Esta investigación aborda la problemática de la "caja negra" en los modelos generativos mediante una arquitectura híbrida que combina la potencia probabilística de las redes neuronales con la precisión lógica de los sistemas basados en reglas y la optimización de los algoritmos evolutivos.
+
+Al introducir la representación matricial relativa, se proporciona un marco de datos que entiende la música como un sistema de sintaxis lógica y no solo como una sucesión estadística de notas. Esto no solo posee un valor científico al proponer nuevas estructuras de datos para el aprendizaje profundo en contextos artísticos, sino que también ofrece una utilidad práctica inmediata: la capacidad de generar archivos MIDI editables que cumplen con estándares académicos rigorosos. Esto facilita el flujo de trabajo en estudios de grabación, orquestación cinematográfica y desarrollo de videojuegos, donde la coherencia estructural es innegociable y la IA debe actuar como un colaborador competente y no como un generador aleatorio.
+
+\section{Implicaciones y Delimitaciones}
+\begin{itemize}
+    \item \textbf{Diseño e Implementación de la Arquitectura Híbrida:} La investigación abarca el diseño, desarrollo y validación técnica de un sistema de software que integra algoritmos genéticos para la selección del estilo predilecto, árboles de decisión para la imposición de reglas estrictas de armonía y contrapunto, y redes neuronales para la generación de material melódico alternativo.
+    \item \textbf{Validación de la Representación Matricial Relativa:} El estudio se centra en la propuesta de un nuevo algoritmo de representación basado en matrices relativas. Se evaluará su efectividad comparativa frente a representaciones lineales en términos de retención de contexto armónico.
+    \item \textbf{Generación Simbólica y Parametrización:} El sistema se limita a la generación de salidas MIDI, permitiendo la manipulación de variables como tonalidad, modo y métrica.
+    \item \textbf{Dominio de la Armonía:} La evaluación de coherencia se circunscribe a la armonía funcional occidental y el contrapunto estricto. Se evaluará la capacidad para evitar errores técnicos como quintas paralelas o resoluciones incorrectas de tritonos.
+    \item \textbf{Exclusiones:} No se contemplan métricas estéticas subjetivas ni la generación automática de partituras visuales a partir del MIDI.
+\end{itemize}
+
+\chapter{Marco Teórico y Revisión de la Literatura}
+\section{Fundamentos de la Música Simbólica y Teoría Musical}
+\subsection{La música como sistema de eventos discretos}
+
+La música puede entenderse como un sistema estructurado de eventos discretos organizados en el tiempo. A diferencia de fenómenos continuos como el ruido ambiental o ciertos procesos físicos naturales, la música en la tradición occidental se construye a partir de unidades diferenciables: notas con alturas específicas, duraciones definidas y relaciones jerárquicas dentro de escalas y acordes. Esta discretización permite representar, analizar y transmitir la música mediante sistemas simbólicos como la notación musical. En particular, la música diatónica constituye uno de los sistemas más influyentes en la historia de la teoría musical occidental, ya que establece un conjunto finito de relaciones entre alturas que pueden combinarse para formar melodías y armonías coherentes.
+
+Desde una perspectiva histórica, el origen del pensamiento musical basado en relaciones discretas puede rastrearse hasta la antigua Grecia. Filósofos como Pitágoras observaron que ciertas proporciones numéricas simples entre longitudes de cuerdas producían intervalos que el oído percibía como consonantes. Por ejemplo, la relación 2:1 corresponde a la octava, mientras que 3:2 corresponde a la quinta justa. Estas observaciones condujeron a la idea de que la música posee una estructura matemática subyacente basada en proporciones entre frecuencias. Este enfoque influyó profundamente en la teoría musical medieval y renacentista, donde la organización de los sonidos se interpretaba como un reflejo del orden matemático del universo.
+
+En términos físicos, el sonido es una onda mecánica que se propaga a través de un medio, usualmente el aire, como variaciones de presión. Una propiedad fundamental del sonido es su frecuencia, medida en Hertz (Hz), que representa el número de ciclos de vibración por segundo. La percepción humana del tono está estrechamente relacionada con la frecuencia de la onda sonora: frecuencias más altas se perciben como sonidos más agudos, mientras que frecuencias más bajas se perciben como sonidos más graves. En música, las alturas de los sonidos se organizan en un conjunto discreto de valores llamados notas.
+
+Las notas musicales constituyen representaciones simbólicas de alturas específicas. En el sistema musical occidental moderno, las notas se nombran utilizando las sílabas do, re, mi, fa, sol, la y si, que corresponden aproximadamente a las letras C, D, E, F, G, A y B en el sistema anglosajón. Estas notas no representan frecuencias únicas universales, sino posiciones relativas dentro de un sistema de afinación. Por ejemplo, en el sistema de afinación estándar contemporáneo, la nota La central (A4) se fija convencionalmente en 440 Hz, y las demás notas se calculan en relación con ella utilizando el sistema de temperamento igual.
+
+El temperamento igual divide la octava en doce intervalos iguales llamados semitonos. Matemáticamente, cada semitono corresponde a multiplicar la frecuencia anterior por el factor $2^{1/12}$. De esta forma, después de doce pasos se alcanza exactamente el doble de la frecuencia inicial, es decir, una octava. Este sistema permite modular entre tonalidades diferentes sin alterar significativamente las relaciones armónicas percibidas, lo cual fue fundamental para el desarrollo de la música tonal entre los siglos XVII y XIX.
+
+En el contexto de este sistema, se distinguen dos tipos básicos de intervalos entre notas adyacentes: el tono y el semitono. Un semitono representa la distancia mínima entre dos notas dentro del sistema cromático de doce divisiones de la octava. Un tono equivale a dos semitonos. La escala diatónica se construye mediante una secuencia específica de tonos y semitonos que organiza siete notas dentro de la octava. La escala mayor, por ejemplo, sigue el patrón:
+
+\[
+T - T - S - T - T - T - S
+\]
+
+donde $T$ representa un tono y $S$ un semitono.
+
+A partir de esta estructura surge la escala diatónica mayor, que constituye la base de gran parte de la música tonal occidental. Por ejemplo, la escala de Do mayor se compone de las notas:
+
+\[
+C \; D \; E \; F \; G \; A \; B \; C
+\]
+
+Esta escala es particularmente significativa porque puede representarse utilizando únicamente las teclas blancas del piano, lo que facilita su comprensión pedagógica. 
+
+\textit{Sugerencia de figura:} aquí puede incluirse una figura que muestre el teclado de un piano con la escala de Do mayor resaltada, o un diagrama del patrón de tonos y semitonos.
+
+Las escalas no solo organizan alturas, sino que también establecen funciones tonales entre las notas. Dentro de la escala, cada grado tiene un papel específico en la percepción de estabilidad o tensión musical. Por ejemplo, el primer grado (tónica) actúa como centro tonal, mientras que el quinto grado (dominante) genera una sensación de tensión que tiende a resolverse hacia la tónica. Este sistema jerárquico constituye la base del lenguaje armónico de la música tonal.
+
+A partir de las escalas se construyen estructuras armónicas más complejas llamadas acordes. El tipo más fundamental de acorde es la tríada, que consiste en tres notas separadas por intervalos de tercera. Una tríada se forma tomando una nota de la escala (la fundamental), añadiendo la tercera y la quinta correspondientes dentro de la misma escala. Por ejemplo, la tríada construida sobre la nota Do en la escala de Do mayor está formada por:
+
+\[
+C - E - G
+\]
+
+Esta combinación produce el acorde de Do mayor. Dependiendo de la relación entre los intervalos, las tríadas pueden clasificarse en diferentes tipos: mayor, menor, disminuida o aumentada. Una tríada mayor se caracteriza por contener una tercera mayor seguida de una tercera menor, mientras que una tríada menor contiene una tercera menor seguida de una tercera mayor.
+
+\textit{Sugerencia de figura:} aquí puede colocarse un diagrama de superposición de terceras mostrando la construcción de una tríada mayor y una menor.
+
+Los acordes pueden ampliarse agregando notas adicionales como la séptima, la novena o la oncena, lo que da lugar a estructuras armónicas más complejas. Sin embargo, incluso en estos casos, la tríada continúa siendo el núcleo estructural del acorde. Esta organización jerárquica refleja nuevamente la naturaleza discreta de la música tonal: cada acorde pertenece a un conjunto finito de configuraciones posibles derivadas de la escala.
+
+Desde un punto de vista analítico, el sistema diatónico puede entenderse como una red combinatoria de eventos discretos. Las notas constituyen los elementos básicos; los intervalos definen las relaciones entre ellos; las escalas organizan subconjuntos específicos de notas; y los acordes emergen como combinaciones estructuradas dentro de estas escalas. Esta perspectiva permite modelar la música utilizando herramientas matemáticas, teoría de conjuntos o grafos, enfoques que han sido explorados extensamente en la musicología computacional y la teoría musical contemporánea.
+
+\textit{Sugerencia de figura:} en este punto podría incluirse un grafo que represente las relaciones entre los grados de la escala o el círculo de quintas.
+
+El círculo de quintas es otro concepto central que ilustra la organización discreta de las tonalidades. En este diagrama, cada tonalidad se conecta con otras mediante intervalos de quinta justa. Este arreglo revela patrones de proximidad tonal y facilita la comprensión de fenómenos como la modulación. Además, muestra cómo las doce notas del sistema cromático pueden organizarse en una estructura cíclica que refleja relaciones armónicas fundamentales.
+
+Históricamente, el desarrollo del sistema diatónico estuvo ligado a la evolución de los sistemas de afinación. Durante la Edad Media y el Renacimiento se utilizaron diversos temperamentos basados en quintas puras o proporciones justas. Sin embargo, estos sistemas presentaban limitaciones al modular entre tonalidades distantes. El temperamento igual, adoptado progresivamente entre los siglos XVII y XVIII, resolvió estas limitaciones al distribuir uniformemente los intervalos dentro de la octava.
+
+\textit{Sugerencia de figura:} aquí podría incluirse una gráfica comparando afinación justa y temperamento igual.
+
+En conclusión, la música diatónica puede describirse como un sistema estructurado de eventos discretos organizados jerárquicamente. Las frecuencias físicas del sonido se discretizan en notas; las notas se organizan en escalas mediante patrones específicos de intervalos; y las escalas generan acordes que constituyen la base de la armonía tonal. Este proceso de discretización no solo facilita la notación y transmisión de la música, sino que también permite su análisis mediante herramientas matemáticas y computacionales. La comprensión de estos elementos fundamentales es esencial para estudiar tanto la teoría musical tradicional como sus aplicaciones contemporáneas en campos como la musicología computacional, la inteligencia artificial musical y el análisis algorítmico de composiciones.
+
+
+\subsection{Teoría de la Armonía Funcional, Contrapunto y Modos griegos}
+
+La teoría musical occidental ha desarrollado múltiples marcos conceptuales para describir la organización de los sonidos en el tiempo. Entre los más influyentes se encuentran la armonía funcional, el contrapunto y el sistema modal heredado de la tradición griega y medieval. Estos enfoques describen diferentes dimensiones del lenguaje musical: la armonía funcional se ocupa de las relaciones jerárquicas entre acordes dentro de una tonalidad; el contrapunto estudia la interacción entre líneas melódicas independientes; y los modos proporcionan sistemas alternativos de organización de las alturas. En conjunto, estos conceptos constituyen una base teórica fundamental para comprender la estructura de la música tonal y modal.
+
+\subsubsection*{Armonía funcional}
+
+La armonía funcional describe el papel que desempeñan los acordes dentro de una tonalidad. En este sistema, cada acorde derivado de una escala diatónica adquiere una función específica relacionada con la estabilidad o la tensión armónica. Las funciones principales son tres: tónica (T), dominante (D) y subdominante (S).
+
+La tónica representa el centro tonal y el punto de reposo armónico. En la escala mayor corresponde al primer grado. La dominante, construida sobre el quinto grado, genera una fuerte tensión que tiende a resolverse hacia la tónica. La subdominante, asociada al cuarto grado, actúa como una función preparatoria que conduce hacia la dominante.
+
+Los acordes dentro de una tonalidad se construyen mediante superposición de terceras sobre cada grado de la escala. En una escala mayor, esto produce las siguientes tríadas:
+
+\[
+I \quad ii \quad iii \quad IV \quad V \quad vi \quad vii^\circ
+\]
+
+donde las mayúsculas representan acordes mayores, las minúsculas acordes menores y el símbolo $^\circ$ indica un acorde disminuido.
+
+Por ejemplo, en la tonalidad de Do mayor los acordes correspondientes son:
+
+\[
+C \quad Dm \quad Em \quad F \quad G \quad Am \quad B^\circ
+\]
+
+Estas relaciones constituyen la base de las progresiones armónicas utilizadas en gran parte de la música tonal.
+
+\textit{Sugerencia de figura:} en este punto puede incluirse una tabla que muestre los grados de la escala mayor y los tipos de acordes generados en cada grado.
+
+Según el análisis funcional desarrollado en la teoría tonal, los acordes pueden clasificarse también por su función armónica:
+
+\[
+T: I, vi \qquad S: ii, IV \qquad D: V, vii^\circ
+\]
+
+Esta clasificación permite describir progresiones armónicas típicas como:
+
+\[
+T \rightarrow S \rightarrow D \rightarrow T
+\]
+
+las cuales aparecen con frecuencia en la música tonal desde el período barroco hasta el romanticismo.
+
+\subsubsection*{Acordes con séptima}
+
+La armonía tonal no se limita a tríadas. Al agregar una tercera adicional sobre una tríada se obtiene un acorde de séptima. Estos acordes introducen mayor complejidad armónica y generan tensiones que requieren resolución.
+
+Los tipos más comunes de acordes de séptima son:
+
+\begin{itemize}
+\item Séptima mayor: $Cmaj7 = C - E - G - B$
+\item Séptima dominante: $C7 = C - E - G - Bb$
+\item Séptima menor: $Cm7 = C - Eb - G - Bb$
+\item Séptima semidisminuida: $Cm7^{\flat5} = C - Eb - Gb - Bb$
+\item Séptima disminuida: $C^\circ7 = C - Eb - Gb - Bbb$
+\end{itemize}
+
+El acorde de séptima dominante es particularmente importante en la armonía funcional porque contiene el tritono entre su tercera y su séptima, lo cual genera una fuerte tendencia a resolver hacia la tónica.
+
+\textit{Sugerencia de figura:} aquí puede incluirse un diagrama de intervalos mostrando la estructura interna del acorde de séptima dominante.
+
+En la escala mayor, los acordes de séptima derivados diatónicamente son:
+
+\[
+Imaj7 \quad iim7 \quad iiim7 \quad IVmaj7 \quad V7 \quad vim7 \quad vii^{\emptyset7}
+\]
+
+donde $^{\emptyset7}$ indica un acorde semidisminuido.
+
+Estos acordes amplían las posibilidades de progresión armónica y permiten describir fenómenos característicos del jazz, la música clásica tardía y diversos estilos contemporáneos.
+
+\subsubsection*{Tensiones: 9, 11 y 13}
+
+Una extensión natural de los acordes de séptima consiste en añadir intervalos adicionales dentro de la misma estructura de terceras superpuestas. Estas extensiones se denominan tensiones y corresponden a los intervalos novena, oncena y trecena respecto a la fundamental.
+
+Matemáticamente, estas tensiones equivalen a las siguientes notas dentro de la escala:
+
+\[
+9 = 2^\mathrm{a} \qquad
+11 = 4^\mathrm{a} \qquad
+13 = 6^\mathrm{a}
+\]
+
+pero se consideran extensiones porque se sitúan una octava por encima.
+
+Por ejemplo:
+
+\[
+C9 = C - E - G - Bb - D
+\]
+
+\[
+C11 = C - E - G - Bb - D - F
+\]
+
+\[
+C13 = C - E - G - Bb - D - F - A
+\]
+
+Estas tensiones enriquecen la sonoridad armónica y son particularmente relevantes en estilos como el jazz y la música contemporánea.
+
+\textit{Sugerencia de figura:} en esta sección puede incluirse un diagrama vertical de superposición de terceras mostrando la construcción de acordes extendidos hasta la trecena.
+
+El estudio geométrico de estas estructuras armónicas ha sido desarrollado en trabajos contemporáneos como los de Tymoczko, quien propone modelos espaciales para representar las relaciones entre acordes y progresiones armónicas.
+
+\subsubsection*{Contrapunto}
+
+El contrapunto constituye una disciplina fundamental en la teoría musical que estudia la combinación de líneas melódicas independientes. Su formulación pedagógica más influyente proviene del tratado \textit{Gradus ad Parnassum} de Johann Joseph Fux, donde se sistematiza el estudio del contrapunto mediante diferentes especies.
+
+El contrapunto de primera especie consiste en la relación nota contra nota. Cada nota del contrapunto corresponde a una nota del cantus firmus. Las consonancias permitidas son la octava, la quinta, la tercera y la sexta.
+
+\textit{Sugerencia de figura:} aquí puede colocarse un ejemplo notado de contrapunto de primera especie.
+
+El contrapunto de segunda especie introduce dos notas contra una del cantus firmus. En este caso se permiten disonancias en los tiempos débiles siempre que estén preparadas y resueltas por movimiento conjunto.
+
+El contrapunto de tercera especie utiliza cuatro notas contra una. Este tipo permite mayor fluidez melódica y se emplea para desarrollar líneas más ornamentadas.
+
+El contrapunto de cuarta especie se caracteriza por el uso de suspensiones. En este caso las notas se prolongan a través de la barra de compás generando disonancias temporales que se resuelven posteriormente por movimiento descendente.
+
+\textit{Sugerencia de figura:} en esta sección puede incluirse un diagrama que muestre una suspensión típica 4–3.
+
+El estudio del contrapunto fue fundamental para compositores del período renacentista y barroco, y continuó influyendo en la teoría musical posterior. Incluso en contextos armónicos más complejos, los principios contrapuntísticos siguen siendo relevantes para comprender la conducción de voces.
+
+\subsubsection*{Modos griegos o modos eclesiásticos}
+
+Antes de la consolidación del sistema tonal mayor-menor, la música occidental utilizaba diversos sistemas modales. Los llamados modos griegos —o más propiamente modos eclesiásticos medievales— representan diferentes configuraciones de intervalos dentro de la escala diatónica.
+
+Los siete modos principales derivados de la escala mayor son:
+
+\begin{itemize}
+\item Jónico
+\item Dórico
+\item Frigio
+\item Lidio
+\item Mixolidio
+\item Eólico
+\item Locrio
+\end{itemize}
+
+Cada modo puede entenderse como una rotación de la escala mayor. Por ejemplo:
+\[
+\begin{aligned}
+\text{Jónico:}      &\; C\; D\; E\; F\; G\; A\; B \\
+\text{Dórico:}      &\; D\; E\; F\; G\; A\; B\; C \\
+\text{Frigio:}      &\; E\; F\; G\; A\; B\; C\; D \\
+\text{Lidio:}       &\; F\; G\; A\; B\; C\; D\; E \\
+\text{Mixolidio:}   &\; G\; A\; B\; C\; D\; E\; F \\
+\text{Eólico:}      &\; A\; B\; C\; D\; E\; F\; G \\
+\text{Locrio:}      &\; B\; C\; D\; E\; F\; G\; A
+\end{aligned}
+\]
+Cada modo posee un carácter sonoro particular debido a la disposición de tonos y semitonos.
+
+\textit{Sugerencia de figura:} aquí puede incluirse una tabla comparativa con los patrones intervalares de cada modo.
+
+Los modos desempeñaron un papel central en la música medieval y renacentista, y han sido retomados en contextos modernos como el jazz modal y la música contemporánea. Desde una perspectiva analítica, pueden interpretarse como diferentes regiones dentro del espacio armónico descrito por Tymoczko, donde las transformaciones entre acordes y escalas pueden representarse mediante geometrías musicales.
+
+Asimismo, el estudio de la armonía funcional fue profundamente reformulado en el siglo XX por Arnold Schoenberg, quien analizó la tonalidad como un sistema de fuerzas dirigidas y tensiones estructurales. Sus tratados influyeron significativamente en la teoría musical moderna y en la comprensión de la transición hacia lenguajes armónicos más complejos.
+
+\subsubsection*{Conclusión}
+
+La armonía funcional, el contrapunto y los sistemas modales representan tres enfoques complementarios para comprender la organización musical. Mientras que la armonía funcional describe las relaciones jerárquicas entre acordes dentro de una tonalidad, el contrapunto analiza la interacción entre voces independientes y los modos ofrecen sistemas alternativos de organización de las alturas. Estos marcos conceptuales han evolucionado a lo largo de siglos de práctica musical y continúan siendo herramientas fundamentales tanto para la composición como para el análisis teórico.
+
+\subsection{Espacios geométricos musicales y conducción de voces}
+
+\section{Representación de Datos en IA Musical}
+\subsection{Representaciones Absolutas vs. Relativas}
+\subsection{El concepto de Representación Matricial Relativa de Armonía Funcional}
+
+\section{Arquitecturas Híbridas en Aprendizaje Automático}
+\subsection{Sistemas Evolutivos: Algoritmos Genéticos aplicados a la estética y selección de estilo}
+\subsection{Sistemas Basados en Reglas: Árboles de Decisión como filtros de restricción armónica (Hard Constraints)}
+\subsection{Aprendizaje Profundo: Redes Neuronales (RNN, Transformers, GANs) para generación estocástica}
+
+\section{Estado del Arte}
+\subsection{Modelos Generativos Contemporáneos (Google Magenta, MuseGAN, Morpheus)}
+\subsection{Comparativa de técnicas de control paramétrico en IA}
+
+\begin{thebibliography}{99}
+
+\bibitem{fernandez2023} G. C. Fernández, ``Inteligencia Artificial Generativa, creando música a ritmo de perceptrón,'' Telefónica Tech, 2023. [En línea]. Disponible en: \url{https://telefonicatech.com/blog/ai-of-things-vi-inteligencia-artificial-generativa-generar-musica}.
+
+\bibitem{kaliakatsos2020} Kaliakatsos-Papakostas, M., Floros, A., \& Vrahatis, M. N., ``Artificial intelligence methods for music generation: A review and future perspectives,'' en \textit{Nature-inspired computation and swarm intelligence}, Academic Press, pp. 217–245, 2020.
+
+\bibitem{sengar2025} Sengar, S. S., Hasan, A. B., Kumar, S., \& Carroll, F., ``Generative artificial intelligence: A systematic review and applications,'' \textit{Multimedia Tools and Applications}, vol. 84, pp. 23661–23700, 2025.
+
+\bibitem{breiman1984} Breiman, L., Friedman, J. H., Olshen, R. A., \& Stone, C. J., \textit{Classification and regression trees}, Wadsworth \& Brooks/Cole, 1984.
+
+\bibitem{wei2024} Wei, L., Yu, Y., Qin, Y., \& Zhang, S., ``From tools to creators: A review on the development and application of artificial intelligence music generation,'' \textit{Applied Sciences}, vol. 14, no. 16, 2024.
+
+\bibitem{batlle2024} Batlle-Roca, R., Gómez, E., Liao, W., Serra, X., \& Mitsufuji, Y., ``Transparency in music-generative AI: A systematic literature review,'' \textit{Research Square}, 2024.
+
+\bibitem{bishop2006} Bishop, C. M., \textit{Pattern recognition and machine learning}, Springer, 2006.
+
+\bibitem{cope1996} Cope, D., \textit{Experiments in musical intelligence}, A-R Editions, 1996.
+
+\bibitem{dong2018} Dong, H.-W., Hsiao, W.-Y., Yang, L.-C., \& Yang, Y.-H., ``MuseGAN: Multi-track sequential generative adversarial networks for symbolic music generation and accompaniment,'' en \textit{AAAI Conference on Artificial Intelligence}, 2018.
+
+\bibitem{fernandez2013} Fernández, J. D., \& Vico, F., ``AI methods in algorithmic composition: A comprehensive survey,'' \textit{Journal of Artificial Intelligence Research}, vol. 48, pp. 513–582, 2013.
+
+\bibitem{goldberg1989} Goldberg, D. E., \textit{Genetic algorithms in search, optimization, and machine learning}, Addison-Wesley, 1989.
+
+\bibitem{goodfellow2016} Goodfellow, I., Bengio, Y., \& Courville, A., \textit{Deep learning}, MIT Press, 2016.
+
+\bibitem{herremans2019} Herremans, D., \& Chew, E., ``MorpheuS: Automatic music generation with recurrent pattern constraints and tension profiles,'' \textit{IEEE Transactions on Affective Computing}, vol. 10, no. 4, pp. 510–523, 2019.
+
+\bibitem{huang2019} Huang, C.-Z. A., et al., ``Music Transformer: Generating music with long-term structure,'' en \textit{International Conference on Learning Representations}, 2019.
+
+\bibitem{persichetti1961} Persichetti, V., \textit{Twentieth-century harmony: Creative aspects and practice}, W. W. Norton \& Company, 1961.
+
+\bibitem{russell2021} Russell, S. J., \& Norvig, P., \textit{Artificial intelligence: A modern approach}, 4.ª ed., Pearson, 2021.
+
+\bibitem{schoenberg1978} Schoenberg, A., \textit{Theory of harmony}, University of California Press, 1978.
+
+\bibitem{tymoczko2011} Tymoczko, D., \textit{A geometry of music: Harmony and counterpoint in the extended common practice}, Oxford University Press, 2011.
+
+\bibitem{piston}
+Piston, W. (1987). \textit{Harmony}. W.W. Norton \& Company.
+
+\bibitem{kostka}
+Kostka, S., Payne, D., \& Almén, B. (2018). \textit{Tonal Harmony}. McGraw-Hill Education.
+
+\bibitem{benward}
+Benward, B., \& Saker, M. (2009). \textit{Music in Theory and Practice}. McGraw-Hill.
+
+\bibitem{laitz}
+Laitz, S. (2015). \textit{The Complete Musician: An Integrated Approach to Tonal Theory, Analysis, and Listening}. Oxford University Press.
+
+\bibitem{hindemith}
+Hindemith, P. (1942). \textit{The Craft of Musical Composition}. Associated Music Publishers.
+
+\bibitem{helmholtz}
+Helmholtz, H. (1954). \textit{On the Sensations of Tone}. Dover Publications.
+
+\bibitem{tymoczko}
+Tymoczko, D. (2011). \textit{A Geometry of Music}. Oxford University Press.
+
+\bibitem{sethares}
+Sethares, W. (2005). \textit{Tuning, Timbre, Spectrum, Scale}. Springer.
+
+\bibitem{schoenberg}
+Schoenberg, A. (1969). \textit{Theory of Harmony}. University of California Press.
+
+\bibitem{schoenberg2}
+Schoenberg, A. (1994). \textit{Structural Functions of Harmony}. W.W. Norton.
+
+\bibitem{tymoczko}
+Tymoczko, D. (2011). \textit{A Geometry of Music: Harmony and Counterpoint in the Extended Common Practice}. Oxford University Press.
+
+\bibitem{fux}
+Fux, J. J. (1965). \textit{Gradus ad Parnassum}. W.W. Norton.
+
+\bibitem{piston}
+Piston, W. (1987). \textit{Harmony}. W.W. Norton.
+
+\bibitem{kostka}
+Kostka, S., Payne, D., Almén, B. (2018). \textit{Tonal Harmony}. McGraw-Hill.
+
+\bibitem{laitz}
+Laitz, S. (2015). \textit{The Complete Musician}. Oxford University Press.
+
+\bibitem{benward}
+Benward, B., Saker, M. (2009). \textit{Music in Theory and Practice}. McGraw-Hill.
+
+\bibitem{aldwell}
+Caldwell, J. (1995). \textit{Medieval Music}. Indiana University Press.
+
+
+\end{thebibliography}
+
+\end{document}
