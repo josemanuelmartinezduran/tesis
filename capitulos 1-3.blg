@@ -1,0 +1,82 @@
+This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: capitulos 1-3.aux
+The style file: unsrt.bst
+Database file #1: capitulo1-3.bib
+You're missing a field part---line 760 of file capitulo1-3.bib
+ :  year=
+ :       (2012),
+I'm skipping whatever remains of this entry
+Warning--can't use both volume and number fields in dong2018musegan
+Warning--empty publisher in molnar2020interpretable
+Warning--empty journal in papadopoulos1999ai
+Warning--empty journal in lippit2021computational
+Too many commas in name 1 of "Dresch, A., Lacerda, D. P., & Antunes Jr., J. A. V." for entry dresch2015
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Dresch, A., Lacerda, D. P., & Antunes Jr., J. A. V." for entry dresch2015
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Dresch, A., Lacerda, D. P., & Antunes Jr., J. A. V." for entry dresch2015
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., & Wesslén, A." for entry wohlin2012
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., & Wesslén, A." for entry wohlin2012
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., & Wesslén, A." for entry wohlin2012
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., & Wesslén, A." for entry wohlin2012
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., & Wesslén, A." for entry wohlin2012
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., & Wesslén, A." for entry wohlin2012
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., & Wesslén, A." for entry wohlin2012
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., & Wesslén, A." for entry wohlin2012
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., & Wesslén, A." for entry wohlin2012
+while executing---line 944 of file unsrt.bst
+Warning--empty title in wohlin2012
+Warning--empty publisher in wohlin2012
+Warning--empty year in wohlin2012
+You've used 96 entries,
+            1791 wiz_defined-function locations,
+            884 strings with 14556 characters,
+and the built_in function-call counts, 17143 in all, are:
+= -- 1476
+> -- 656
+< -- 3
++ -- 265
+- -- 169
+* -- 827
+:= -- 2748
+add.period$ -- 286
+call.type$ -- 96
+change.case$ -- 55
+chr.to.int$ -- 0
+cite$ -- 103
+duplicate$ -- 922
+empty$ -- 1928
+format.name$ -- 169
+if$ -- 3889
+int.to.chr$ -- 0
+int.to.str$ -- 96
+missing$ -- 125
+newline$ -- 479
+num.names$ -- 104
+pop$ -- 452
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 296
+stack$ -- 0
+substring$ -- 629
+swap$ -- 121
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 7
+while$ -- 154
+width$ -- 98
+write$ -- 986
+(There were 13 error messages)

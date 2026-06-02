@@ -1,0 +1,515 @@
+\begin{thebibliography}{10}
+
+\bibitem{krumhansl1982spatiotemporal}
+C.~L. Krumhansl and E.~J. Kessler.
+\newblock Tracing the dynamic changes in perceived tonal organization in a
+  spatial representation of musical keys.
+\newblock {\em Psychological Review}, 89(4):334--368, 1982.
+
+\bibitem{sudnow2001ways}
+E.~Selfridge-Field.
+\newblock {\em Beyond MIDI: The handbook of musical codes}.
+\newblock MIT Press, 1995.
+
+\bibitem{schoenberg1978}
+A.~Schoenberg.
+\newblock {\em Theory of Harmony}.
+\newblock University of California Press, 1978.
+
+\bibitem{chew2014mathematical}
+E.~Chew.
+\newblock {\em Mathematical and computational models of music theory: From
+  de-mystification to de-reconstruction}.
+\newblock Springer, 2014.
+
+\bibitem{aldwell2018harmony}
+E.~Aldwell, C.~Schachter, and A.~Cadwallader.
+\newblock {\em Harmony and voice leading}.
+\newblock Cengage Learning, 5th edition, 2018.
+
+\bibitem{harrison1994harmonic}
+D.~Harrison.
+\newblock {\em Harmonic function in chromatic music: A renewed dualist theory
+  and an onto-historical account}.
+\newblock University of Chicago Press, 1994.
+
+\bibitem{rohrmeier2011generative}
+M.~Rohrmeier.
+\newblock Towards a generative syntax of tonal harmony.
+\newblock {\em Journal of Mathematics and Music}, 5(1):35--53, 2011.
+
+\bibitem{levine2011jazz}
+M.~Levine.
+\newblock {\em The jazz theory book}.
+\newblock Sher Music Co., 1995.
+
+\bibitem{russell2001lydian}
+G.~Russell.
+\newblock {\em Lydian chromatic concept of tonal organization}.
+\newblock Concept Publishing Company, 2001.
+
+\bibitem{catanzaro2011topological}
+M.~J. Catanzaro.
+\newblock Generalized tonnetze.
+\newblock {\em Journal of Mathematics and Music}, 5(2):117--139, 2011.
+
+\bibitem{dong2018musegan}
+H.~W. Dong, W.~Y. Hsiao, L.~C. Yang, and Y.~H. Yang.
+\newblock Musegan: Multi-track sequential generative adversarial networks for
+  symbolic music generation and accompaniment.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~32, 2018.
+
+\bibitem{christensen2002cambridge}
+T.~Christensen, editor.
+\newblock {\em The Cambridge history of Western music theory}.
+\newblock Cambridge University Press, 2002.
+
+\bibitem{goodfellow2016deep}
+I.~Goodfellow, Y.~Bengio, and A.~Courville.
+\newblock {\em Deep learning}.
+\newblock MIT Press, 2016.
+
+\bibitem{lecun2015deep}
+Y.~LeCun, Y.~Bengio, and G.~Hinton.
+\newblock Deep learning.
+\newblock {\em Nature}, 521(7553):436--444, 2015.
+
+\bibitem{young2015optimizing}
+S.~R. Young et~al.
+\newblock Optimizing deep learning hyper-parameters through an evolutionary
+  algorithm, 2015.
+
+\bibitem{sengar2025}
+S.~S. Sengar et~al.
+\newblock Generative artificial intelligence: A systematic review and
+  applications.
+\newblock {\em Multimedia Tools and Applications}, 2025.
+
+\bibitem{wei2024}
+L.~Wei et~al.
+\newblock From tools to creators: A review on ai music generation.
+\newblock {\em Applied Sciences}, 14(16), 2024.
+
+\bibitem{batlle2024}
+R.~Batlle-Roca et~al.
+\newblock Transparency in music-generative ai: A systematic literature review.
+\newblock {\em Research Square}, 2024.
+
+\bibitem{fernandez2023}
+G.~C. Fern{\'a}ndez.
+\newblock Inteligencia artificial generativa, creando m{\'u}sica a ritmo de
+  perceptr{\'o}n.
+\newblock
+  \url{https://telefonicatech.com/blog/ai-of-things-vi-inteligencia-artificial-generativa-generar-musica},
+  2023.
+\newblock Accedido: 18 Julio 2023.
+
+\bibitem{kaliakatsos20}
+M.~Kaliakatsos-Papakostas, A.~Floros, and M.~N. Vrahatis.
+\newblock Artificial intelligence methods for music generation: A review and
+  future perspectives.
+\newblock In X.-S. Yang, editor, {\em Nature-inspired computation and swarm
+  intelligence}, pages 217--245. Academic Press, 2020.
+
+\bibitem{tymoczko2011}
+D.~Tymoczko.
+\newblock {\em A Geometry of Music: Harmony and Counterpoint in the Extended
+  Common Practice}.
+\newblock Oxford University Press, 2011.
+
+\bibitem{baker2007}
+A.~Barker.
+\newblock {\em The Science of Harmonics in Classical Greece}.
+\newblock Cambridge University Press, 2007.
+
+\bibitem{christensen2002}
+T.~Christensen, editor.
+\newblock {\em The Cambridge History of Western Music Theory}.
+\newblock Cambridge University Press, 2002.
+
+\bibitem{zwicker2013}
+E.~Zwicker and H.~Fastl.
+\newblock {\em Psychoacoustics: Facts and models}.
+\newblock Springer Science \& Business Media, 2013.
+
+\bibitem{iso16:1975}
+{International Organization for Standardization}.
+\newblock Acoustics --- standard tuning frequency (standard musical pitch) (iso
+  16:1975).
+\newblock Technical report, ISO, 1975.
+
+\bibitem{benson2006}
+D.~J. Benson.
+\newblock {\em Music: A mathematical offering}.
+\newblock Cambridge University Press, 2006.
+
+\bibitem{isacoff2001temperament}
+S.~Isacoff.
+\newblock {\em Temperament: How music became a battleground for the great minds
+  of Western civilization}.
+\newblock Alfred A. Knopf, 2001.
+
+\bibitem{agmon1989diatonic}
+E.~Agmon.
+\newblock A mathematical model of the diatonic system.
+\newblock {\em Journal of Music Theory}, 33(1):1--25, 1989.
+
+\bibitem{riemann1893simplified}
+H.~Riemann.
+\newblock {\em Simplified harmony or the theory of the tonal functions of
+  chords}.
+\newblock Augener, 1893.
+
+\bibitem{piston1987harmony}
+W.~Piston.
+\newblock {\em Harmony}.
+\newblock W. W. Norton \& Company, 5th edition, 1987.
+
+\bibitem{forte1982introduction}
+A.~Forte and S.~E. Gilbert.
+\newblock {\em Introduction to Schenkerian analysis}.
+\newblock W. W. Norton \& Company, 1982.
+
+\bibitem{mazzola2012topos}
+G.~Mazzola.
+\newblock {\em The topos of music: Geometric logic of concepts, theory, and
+  performance}.
+\newblock Birkh{\"a}user, 2012.
+
+\bibitem{krumhansl1990cognitive}
+C.~L. Krumhansl.
+\newblock {\em Cognitive foundations of musical pitch}.
+\newblock Oxford University Press, 1990.
+
+\bibitem{duffin2007how}
+R.~W. Duffin.
+\newblock {\em How equal temperament ruined harmony (and why you should care)}.
+\newblock W. W. Norton \& Company, 2007.
+
+\bibitem{delamotte1991harmony}
+D.~De~la Motte.
+\newblock {\em The study of harmony: An historical perspective}.
+\newblock Stefan de Vaan, 1991.
+
+\bibitem{schoenberg1969structural}
+A.~Schoenberg.
+\newblock {\em Structural functions of harmony}.
+\newblock Williams and Norgate, 1969.
+
+\bibitem{schoenberg1983theory}
+A.~Schoenberg.
+\newblock {\em Theory of harmony}.
+\newblock University of California Press, 1983.
+
+\bibitem{terhardt1982pyschoacoustic}
+E.~Terhardt, G.~Stoll, and M.~Seewann.
+\newblock Algorithm for extraction of pitch and pitch salience from complex
+  tonal signals.
+\newblock {\em The Journal of the Acoustical Society of America},
+  71(3):679--688, 1982.
+
+\bibitem{tymoczko2006geometry}
+D.~Tymoczko.
+\newblock The geometry of musical chords.
+\newblock {\em Science}, 313(5783):72--74, 2006.
+
+\bibitem{schottstaedt1989automatic}
+B.~Schottstaedt.
+\newblock Automatic counterpoint.
+\newblock In M.~Mathews and J.~R. Pierce, editors, {\em Current directions in
+  computer music research}, pages 199--214. MIT Press, 1989.
+
+\bibitem{westergaard1975introduction}
+P.~Westergaard.
+\newblock {\em An introduction to tonal theory}.
+\newblock W. W. Norton \& Company, 1975.
+
+\bibitem{carey1989aspects}
+N.~Carey and D.~Clampitt.
+\newblock Aspects of well-formed scales.
+\newblock {\em Music Theory Spectrum}, 11(2):187--206, 1989.
+
+\bibitem{brent2011modalogy}
+J.~Brent and S.~Barkley.
+\newblock {\em Modalogy: Scales, modes \& chords: The structural relationships
+  of pictorial harmony}.
+\newblock Hal Leonard Corporation, 2011.
+
+\bibitem{pachet1998content}
+F.~Pachet and P.~Roy.
+\newblock Automatic harmonization: A survey.
+\newblock In {\em First International Conference on Constraints and Art}, 1998.
+
+\bibitem{roeder1984geometric}
+J.~Roeder.
+\newblock {\em A geometric model of voice-leading}.
+\newblock PhD thesis, Yale University, 1984.
+
+\bibitem{tymoczko2006geometry7274}
+D.~Tymoczko.
+\newblock The geometry of musical chords.
+\newblock {\em Science}, 313(5783):72--74, 2006.
+
+\bibitem{callender2008generalized}
+C.~Callender, I.~Quinn, and D.~Tymoczko.
+\newblock Generalized voice-leading spaces.
+\newblock {\em Science}, 320(5874):346--348, 2008.
+
+\bibitem{tymoczko2011geometry}
+D.~Tymoczko.
+\newblock {\em A geometry of music: Harmony and counterpoint in the extended
+  common practice}.
+\newblock Oxford University Press, 2011.
+
+\bibitem{bent2011modalogy}
+J.~Brent and S.~Barkley.
+\newblock {\em Modalogy: Scales, modes \& chords: The structural relationships
+  of pictorial harmony}.
+\newblock Hal Leonard Corporation, 2011.
+
+\bibitem{tymoczko2008scale}
+D.~Tymoczko.
+\newblock Scale theory, coherence, and strategies of group formation.
+\newblock {\em Journal of Music Theory}, 52(1):1--49, 2008.
+
+\bibitem{cohn1997neo}
+R.~Cohn.
+\newblock Neo-riemannian operations, parsimonious trichords, and their
+  "tonnetz" representations.
+\newblock {\em Journal of Music Theory}, 41(1):1--66, 1997.
+
+\bibitem{bergomi2015topological}
+M.~G. Bergomi.
+\newblock {\em Topological structures in computer-aided music theory and
+  analysis}.
+\newblock PhD thesis, Universit{\'e} Pierre et Marie Curie, 2015.
+
+\bibitem{hall2008topology}
+R.~W. Hall.
+\newblock Geometrical music theory.
+\newblock {\em Science}, 320(5874):328--329, 2008.
+
+\bibitem{midi1996specification}
+{MIDI Manufacturers Association}.
+\newblock {\em The complete MIDI 1.0 detailed specification}.
+\newblock MIDI Manufacturers Association, 1996.
+
+\bibitem{briot2020deep}
+J.~P. Briot, G.~Gaudin, and G.~Hadjeres.
+\newblock {\em Deep learning techniques for music generation}.
+\newblock Springer, 2020.
+
+\bibitem{huang2018music}
+C.~Z.~A. Huang, A.~Vaswani, J.~Uszkoreit, N.~Shazeer, I.~Simon, C.~Hawthorne,
+  et~al.
+\newblock Music transformer: Generating music with long-term structure.
+\newblock {\em arXiv preprint arXiv:1809.04281}, 2018.
+
+\bibitem{conklin1995multiple}
+D.~Conklin and I.~H. Witten.
+\newblock Multiple viewpoints for music prediction.
+\newblock {\em Journal of New Music Research}, 24(1):51--73, 1995.
+
+\bibitem{temperley2004bayesian}
+D.~Temperley.
+\newblock A bayesian approach to key-finding.
+\newblock {\em Contemporary Music Review}, 23(3-4):145--158, 2004.
+
+\bibitem{shaw2018self}
+P.~Shaw, J.~Uszkoreit, and A.~Vaswani.
+\newblock Self-attention with relative position representations.
+\newblock {\em arXiv preprint arXiv:1803.02155}, 2018.
+
+\bibitem{roberts2018hierarchical}
+A.~Roberts, J.~Engel, C.~Raffel, C.~Hawthorne, and D.~Eck.
+\newblock A hierarchical latent vector model for learning long-term structure
+  in music.
+\newblock In {\em Proceedings of the 35th International Conference on Machine
+  Learning}, 2018.
+
+\bibitem{wiering2009modeling}
+F.~Wiering, E.~Pollastri, and A.~Volk.
+\newblock Modeling musical style using richness of representation.
+\newblock In {\em Proceedings of the 10th International Society for Music
+  Information Retrieval Conference}, 2009.
+
+\bibitem{hadjeres2017deepbach}
+G.~Hadjeres, F.~Pachet, and F.~Nielsen.
+\newblock Deepbach: A steerable model for chorale generation.
+\newblock In {\em Proceedings of the 34th International Conference on Machine
+  Learning}, 2017.
+
+\bibitem{dehaas2013modeling}
+W.~B. De~Haas, J.~P. Magalh{\~a}es, and F.~Wiering.
+\newblock Modeling harmonic similarity using a functional harmonic analysis.
+\newblock {\em Journal of New Music Research}, 42(3):238--255, 2013.
+
+\bibitem{collins2014computational}
+T.~Collins and R.~Laney.
+\newblock Computer-generated stylistic compositions.
+\newblock In {\em Proceedings of the 5th International Conference on
+  Computational Creativity}, 2014.
+
+\bibitem{pachet2011finite}
+F.~Pachet, P.~Roy, and G.~Barbieri.
+\newblock Finite-order markov chains with constraints.
+\newblock In {\em Proceedings of the 22nd International Joint Conference on
+  Artificial Intelligence}, 2011.
+
+\bibitem{farbood2012quantifying}
+M.~M. Farbood.
+\newblock Quantifying musical tension from structural features.
+\newblock {\em Music Perception}, 29(4):387--402, 2012.
+
+\bibitem{todd1989connectionist}
+P.~M. Todd.
+\newblock A connectionist approach to algorithmic composition.
+\newblock {\em Computer Music Journal}, 13(4):27--43, 1989.
+
+\bibitem{rumelhart1986learning}
+D.~E. Rumelhart, G.~E. Hinton, and R.~J. Williams.
+\newblock Learning representations by back-propagating errors.
+\newblock {\em Nature}, 323(6088):533--536, 1986.
+
+\bibitem{abadi2016tensorflow}
+M.~Abadi et~al.
+\newblock Tensorflow: A system for large-scale machine learning.
+\newblock In {\em OSDI 16}, 2016.
+
+\bibitem{bengio1994learning}
+Y.~Bengio, P.~Simard, and P.~Frasconi.
+\newblock Learning long-term dependencies with gradient descent is difficult.
+\newblock {\em IEEE transactions on neural networks}, 5(2):157--166, 1994.
+
+\bibitem{eck2002finding}
+D.~Eck and J.~Schmidhuber.
+\newblock Finding temporal structure in music: Lessons from lstm, 2002.
+
+\bibitem{holtzman2019curious}
+A.~Holtzman et~al.
+\newblock The curious case of neural text degeneration.
+\newblock {\em arXiv preprint arXiv:1904.09751}, 2019.
+
+\bibitem{kingma2014adam}
+D.~P. Kingma and J.~Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock {\em arXiv preprint arXiv:1412.6980}, 2014.
+
+\bibitem{stanley2002evolving}
+K.~O. Stanley and R.~Miikkulainen.
+\newblock Evolving neural networks through augmenting topologies.
+\newblock {\em Evolutionary Computation}, 10(2):99--127, 2002.
+
+\bibitem{miranda2013evolutionary}
+E.~R. Miranda and J.~A. Biles, editors.
+\newblock {\em Evolutionary computer music}.
+\newblock Springer, 2013.
+
+\bibitem{breiman2017classification}
+L.~Breiman et~al.
+\newblock {\em Classification and regression trees}.
+\newblock Routledge, 2017.
+
+\bibitem{molnar2020interpretable}
+C.~Molnar.
+\newblock {\em Interpretable machine learning}.
+\newblock 2020.
+
+\bibitem{papadopoulos1999ai}
+G.~Papadopoulos and G.~Wiggins.
+\newblock Ai methods for algorithmic composition.
+\newblock 1999.
+
+\bibitem{lerdahl1985generative}
+F.~Lerdahl and R.~Jackendoff.
+\newblock {\em A generative theory of tonal music}.
+\newblock MIT Press, 1985.
+
+\bibitem{fux1965study}
+J.~J. Fux.
+\newblock {\em The study of counterpoint}.
+\newblock W. W. Norton \& Company, 1965.
+
+\bibitem{herremans2017morpheus}
+D.~Herremans and E.~Chew.
+\newblock Morpheus: Generating structured music with high-level patterns and
+  constraints.
+\newblock {\em IEEE Transactions on Affective Computing}, 10(4):489--502, 2017.
+
+\bibitem{garcez2020neurosymbolic}
+A.~D. Garcez and L.~C. Lamb.
+\newblock Neurosymbolic ai: The 3rd wave.
+\newblock {\em arXiv preprint arXiv:2012.05876}, 2020.
+
+\bibitem{liu2017hierarchical}
+H.~Liu et~al.
+\newblock Hierarchical representations for efficient architecture search.
+\newblock {\em arXiv preprint arXiv:1711.00436}, 2017.
+
+\bibitem{holland1992adaptation}
+J.~H. Holland.
+\newblock {\em Adaptation in natural and artificial systems}.
+\newblock MIT Press, 1992.
+
+\bibitem{stanley2019designing}
+K.~O. Stanley et~al.
+\newblock Designing neural networks through neuroevolution.
+\newblock {\em Nature Machine Intelligence}, 1(1):24--35, 2019.
+
+\bibitem{takagi2001interactive}
+H.~Takagi.
+\newblock Interactive evolutionary computation.
+\newblock {\em Proceedings of the IEEE}, 89(9):1274--1296, 2001.
+
+\bibitem{dawkins1986blind}
+R.~Dawkins.
+\newblock {\em The Blind Watchmaker}.
+\newblock W. W. Norton \& Company, 1986.
+
+\bibitem{goldberg1989genetic}
+D.~E. Goldberg.
+\newblock {\em Genetic algorithms in search, optimization, and machine
+  learning}.
+\newblock Addison-Wesley, 1989.
+
+\bibitem{branke2002evolutionary}
+J.~Branke.
+\newblock {\em Evolutionary optimization in dynamic environments}.
+\newblock Springer, 2002.
+
+\bibitem{mccormack2013computers}
+J.~McCormack and M.~d'Inverno, editors.
+\newblock {\em Computers and creativity}.
+\newblock Springer, 2013.
+
+\bibitem{yang2017midinet}
+L.~C. Yang et~al.
+\newblock Midinet: A convolutional generative adversarial network for
+  symbolic-domain music generation, 2017.
+
+\bibitem{lippit2021computational}
+M.~Lippi and M.~d'Inverno.
+\newblock Computational creativity: The role of the human in the loop.
+\newblock 2021.
+
+\bibitem{pachet2021learning}
+F.~Pachet.
+\newblock Learning and controlling musical style.
+\newblock {\em Nature Reviews Physics}, 3(6):384--385, 2021.
+
+\bibitem{ji2020comprehensive}
+S.~y~otros Ji.
+\newblock A comprehensive survey on deep music generation.
+\newblock {\em arXiv preprint arXiv:2006.06293}, 2020.
+
+\bibitem{dresch2015}
+Lacerda D. P. & Antunes Jr. J. A.~V. Dresch, A.
+\newblock {\em Design science research: A method for science and technology
+  advancement.}
+\newblock Springer., 2015.
+
+\bibitem{wohlin2012}
+Runeson P. Höst M. Ohlsson M. C. Regnell B. & Wesslén~A. Wohlin, C.
+
+\end{thebibliography}

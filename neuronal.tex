@@ -1,0 +1,26 @@
+\section{Diseño del Núcleo Generativo}
+El núcleo generativo del sistema propuesto se fundamenta en una arquitectura híbrida que combina el aprendizaje profundo con mecanismos de control determinista. El componente central de esta arquitectura es una red neuronal recurrente diseñada para procesar y predecir secuencias de eventos musicales representados mediante una estructura matricial relativa. Este enfoque permite que el sistema no solo aprenda patrones melódicos estadísticos, sino que también mantenga una coherencia teórica al operar sobre intervalos y grados de la escala en lugar de valores absolutos.
+
+\subsection{Arquitectura de la red neuronal}
+La arquitectura implementada utiliza un modelo de tipo \textit{Sequential} basado en redes de Memoria a Corto y Largo Plazo (LSTM), seleccionadas por su capacidad superior para capturar dependencias temporales en secuencias musicales. La estructura de la red se define de la siguiente manera:
+
+\begin{enumerate}
+    \item \textbf{Capa de Entrada:} Recibe tensores con una forma de $(L, F)$, donde $L$ (SEQ\_LENGTH) es la longitud de la secuencia (fijada en 4 eventos) y $F$ (NUM\_FEATURES) es el número de características por evento.
+    \item \textbf{Capa LSTM:} Una capa de 64 unidades con función de activación ReLU. Esta capa procesa la secuencia temporal y retorna un vector de características que resume el contexto musical previo.
+    \item \textbf{Capa Densa Intermedia:} Una capa totalmente conectada de 32 neuronas con activación ReLU, que actúa como un extractor de características de alto nivel para refinar la predicción.
+\end{enumerate}
+
+El modelo utiliza el optimizador \textit{Adam} y una función de pérdida de error cuadrático medio (MSE), lo que orienta el aprendizaje hacia un problema de regresión para la estimación precisa de los parámetros musicales.
+
+\subsection{Capas paramétricas enlazadas a genes}
+En el contexto de la arquitectura híbrida, las características de entrada y salida de la red actúan como los "genes" que definen la identidad del material musical generado. El sistema utiliza una representación de 4 características fundamentales (genes paramétricos):
+\begin{itemize}
+    \item \textbf{Nota:} Valor de altura relativo.
+    \item \textbf{Duración:} Magnitud temporal del evento.
+    \item \textbf{Grado:} Posición dentro de la escala diatónica activa.
+    \item \textbf{Intervalo:} Distancia semitonal respecto a la nota anterior.
+\end{itemize}
+Estos parámetros permiten que el algoritmo genético, mencionado en el planteamiento del problema, opere directamente sobre la configuración de la red, ajustando las tendencias generativas según las preferencias estéticas del usuario y las restricciones de los árboles de decisión.
+
+\subsection{Definición de la capa de salida}
+La capa de salida consiste en una capa densa con un número de unidades igual a \texttt{NUM\_FEATURES} (4). A diferencia de los modelos de clasificación categórica comunes en la generación de texto, esta capa utiliza una activación lineal para realizar una \textbf{regresión multivariada}. Los cuatro valores continuos resultantes representan la predicción del próximo evento en el espacio paramétrico definido. Este diseño permite una mayor fluidez en la generación de duraciones e intervalos, los cuales son posteriormente post-procesados y cuantizados por el sistema de reglas para asegurar su validez dentro de la teoría musical convencional.

@@ -1,0 +1,39 @@
+Capítulo 3: Metodología y Diseño de la Arquitectura Híbrida
+
+3.1 Enfoque de la Investigación
+    3.1.1 Tipo de estudio: Investigación y Desarrollo
+    3.1.2 Fases del desarrollo del sistema
+
+3.2 Formalización de la Representación Matricial Relativa
+    3.2.1 Abstracción de datos: Del evento absoluto al vector relativo
+    3.2.2 Algoritmo de mapeo de funciones armónicas y distancias interválicas
+    3.2.3 Normalización y preparación del dataset para el entrenamiento
+
+3.3 Diseño del Núcleo Generativo
+    3.3.1 Arquitectura de la red neuronal
+    3.3.2 Capas paramétricas enlazadas a genes
+    3.3.3 Definición de la capa de salida
+
+3.4 Implementación de Filtros Deterministas
+    3.4.1 Codificación de reglas de contrapunto estricto (1ra a 4ta especie)
+    3.4.2 Lógica de poda y validación de secuencias candidatas
+    3.4.3 Interfaz de parametrización: Tonalidad, Modo y Métrica
+
+3.5 Optimización Evolutiva
+    3.5.1 Definición del cromosoma: Representación de la estructura musical y estilo
+    3.5.2 Operadores genéticos: Cruce y mutación aplicados a la notación simbólica
+
+3.6 Integración de la Arquitectura y Workflow
+    3.6.1 Comunicación entre módulos
+    3.6.2 Pipeline de salida: Generación del archivo MIDI editable
+
+3.7 Estrategia de Validación y Pruebas
+    3.7.1 Definición de métricas de error armónico
+    3.7.2 Diseño de los experimentos comparativos (Sistema propuesto vs. Modelos tradicionales)
+    
+    
+El sistema consiste en cuatro etapas
+1 representación de lineas melídicas en formato matricial, utilizando un algoritmo de conversión relativo, de tal modo que conisdere tonalidad y la distancia relativa de la nota anterior
+2 Generador de melodías, por medio del aprendizaje profundo el sistema generara melodias representadas en formato matricial, el cual servirá como interfaz para el siguiente bloque
+3 Filtros deterministicos por medio de arboles de decisión parametrizables, donde podremos elegir especie de contrapunto tonalidad modo y metrica
+4 Optimización por algoitmos geneticos, donde basado en las preferencias del usuario  se retroal;imentearan a los genes que definen a las capas de lared nuronal de la etapa dos
