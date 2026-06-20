@@ -36,17 +36,18 @@
 \contentsline {subsection}{\numberline {3.2.2}Algoritmo de mapeo de funciones armónicas y distancias interválicas}{59}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Normalización y preparación del dataset para el entrenamiento}{61}{subsection.3.2.3}%
 \contentsline {section}{\numberline {3.3}Diseño del Núcleo Generativo}{62}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Arquitectura de la red neuronal}{63}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Capas paramétricas enlazadas a genes}{63}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Definición de la capa de salida}{64}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Implementación de Filtros Deterministas}{64}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Codificación de tonalidades, modos e inducción de mutaciones}{66}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Lógica de poda y validación de secuencias candidatas}{70}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Interfaz de parametrización: Tonalidad y modo}{73}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}Optimización Evolutiva}{74}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Definición del cromosoma}{75}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Operadores genéticos: Cruce y mutación aplicados a la notación simbólica}{77}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Interfaz de usuario para la selección de parámetros}{78}{subsection.3.5.3}%
-\contentsline {section}{\numberline {3.6}Integración de la Arquitectura y Workflow}{80}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Comunicación entre módulos}{80}{subsection.3.6.1}%
-\contentsline {subsection}{\numberline {3.6.2}Pipeline de salida: Generación del archivo MIDI editable}{81}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.3.1}Estructura e Implementación de la Red Neuronal Generativa}{63}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Arquitectura de la red neuronal}{64}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Capas paramétricas enlazadas a genes}{65}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Definición de la capa de salida}{66}{subsection.3.3.4}%
+\contentsline {section}{\numberline {3.4}Implementación de Filtros Deterministas}{66}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Codificación de tonalidades, modos e inducción de mutaciones}{68}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Lógica de poda y validación de secuencias candidatas}{72}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Interfaz de parametrización: Tonalidad y modo}{75}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Optimización Evolutiva}{76}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Definición del cromosoma}{77}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Operadores genéticos: Cruce y mutación aplicados a la notación simbólica}{79}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Interfaz de usuario para la selección de parámetros}{80}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Integración de la Arquitectura y Workflow}{82}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Comunicación entre módulos}{82}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Pipeline de salida: Generación del archivo MIDI editable}{83}{subsection.3.6.2}%

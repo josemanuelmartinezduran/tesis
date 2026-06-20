@@ -3,62 +3,49 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: capitulos 1-3.aux
 The style file: unsrt.bst
 Database file #1: capitulo1-3.bib
-You're missing a field part---line 760 of file capitulo1-3.bib
- :  year=
- :       (2012),
-I'm skipping whatever remains of this entry
 Warning--can't use both volume and number fields in dong2018musegan
 Warning--empty publisher in molnar2020interpretable
 Warning--empty journal in papadopoulos1999ai
 Warning--empty journal in lippit2021computational
-Too many commas in name 1 of "Dresch, A., Lacerda, D. P., y otros" for entry dresch2015
-while executing---line 944 of file unsrt.bst
-Too many commas in name 1 of "Dresch, A., Lacerda, D. P., y otros" for entry dresch2015
-while executing---line 944 of file unsrt.bst
-Too many commas in name 1 of "Wohlin, C., Runeson, y otros" for entry wohlin2012
-while executing---line 944 of file unsrt.bst
-Warning--empty title in wohlin2012
-Warning--empty publisher in wohlin2012
-Warning--empty year in wohlin2012
 You've used 96 entries,
             1791 wiz_defined-function locations,
-            884 strings with 14486 characters,
-and the built_in function-call counts, 17126 in all, are:
-= -- 1475
-> -- 652
+            884 strings with 14530 characters,
+and the built_in function-call counts, 17195 in all, are:
+= -- 1482
+> -- 666
 < -- 3
-+ -- 264
-- -- 168
-* -- 826
-:= -- 2745
-add.period$ -- 286
++ -- 268
+- -- 172
+* -- 828
+:= -- 2762
+add.period$ -- 288
 call.type$ -- 96
 change.case$ -- 55
 chr.to.int$ -- 0
-cite$ -- 103
+cite$ -- 100
 duplicate$ -- 922
 empty$ -- 1928
-format.name$ -- 168
-if$ -- 3885
+format.name$ -- 172
+if$ -- 3902
 int.to.chr$ -- 0
 int.to.str$ -- 96
 missing$ -- 125
-newline$ -- 479
+newline$ -- 481
 num.names$ -- 104
-pop$ -- 452
+pop$ -- 448
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
 skip$ -- 295
 stack$ -- 0
 substring$ -- 629
-swap$ -- 121
+swap$ -- 122
 text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 7
+warning$ -- 4
 while$ -- 154
 width$ -- 98
-write$ -- 986
-(There were 4 error messages)
+write$ -- 991
+(There were 4 warnings)

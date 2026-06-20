@@ -10,16 +10,16 @@ La comunicación y transferencia de información entre los distintos componentes
 
 El protocolo de transferencia de datos se describe según los siguientes flujos de comunicación entre archivos:
 \begin{itemize}
-    \item \textbf{De Señal Física a Matriz de Datos:} El módulo \texttt{midi\_processor.py} analiza los archivos MIDI de entrada almacenados en el directorio \texttt{datos\_entrada/}, extrayendo los eventos de encendido (\textit{Note On}) y apagado (\textit{Note Off}). Convierte estos datos en matrices numéricas relativas compatibles con el optimizador y la red.
-    \item \textbf{De Población Evolutiva a Datos de Entrenamiento:} El script \texttt{genetic\_optimizer.py} inicializa y evoluciona la población de cromosomas matriciales, guardando cada individuo de forma independiente en archivos de texto en la carpeta \texttt{matrices\_entrada/}.
-    \item \textbf{De Matriz de Entrada a Red Neuronal:} El generador melódico \texttt{melody\_generator.py} importa \texttt{network\_builder.py} para construir la red recurrente a partir de la configuración matricial cargada desde \texttt{arquitectura\_tensor.txt}. Consume las matrices evolucionadas para entrenar el modelo y proponer nuevas predicciones.
-    \item \textbf{De Predicción Estocástica a Validación Simbólica:} La matriz resultante de la red se transfiere directamente al módulo \texttt{decision_tree_filter.py}, donde es evaluada secuencialmente para corregir saltos melódicos o cromatismos no permitidos.
-    \item \textbf{De Matriz Validada a Señal Física:} La matriz corregida por el árbol se transfiere de vuelta a \texttt{midi\_processor.py} para su conversión final en archivos MIDI ejecutables.
+    \item \textbf{De Señal Física a Matriz de Datos:} El módulo \texttt{procesador\_midi.py} analiza los archivos MIDI de entrada almacenados en el directorio \texttt{datos\_entrada/}, extrayendo los eventos de encendido (\textit{Note On}) y apagado (\textit{Note Off}). Convierte estos datos en matrices numéricas relativas compatibles con el optimizador y la red.
+    \item \textbf{De Población Evolutiva a Datos de Entrenamiento:} El script \texttt{optimizador\_genetico.py} inicializa y evoluciona la población de cromosomas matriciales, guardando cada individuo de forma independiente en archivos de texto en la carpeta \texttt{matrices\_entrada/}.
+    \item \textbf{De Matriz de Entrada a Red Neuronal:} El generador melódico \texttt{generador\_melodias.py} importa \texttt{constructor\_red.py} para construir la red recurrente a partir de la configuración matricial cargada desde \texttt{arquitectura\_tensor.txt}. Consume las matrices evolucionadas para entrenar el modelo y proponer nuevas predicciones.
+    \item \textbf{De Predicción Estocástica a Validación Simbólica:} La matriz resultante de la red se transfiere directamente al módulo \texttt{filtro\_arbol\_decision.py}, donde es evaluada secuencialmente para corregir saltos melódicos o cromatismos no permitidos.
+    \item \textbf{De Matriz Validada a Señal Física:} La matriz corregida por el árbol se transfiere de vuelta a \texttt{procesador\_midi.py} para su conversión final en archivos MIDI ejecutables.
 \end{itemize}
 
 \subsection{Pipeline de salida: Generación del archivo MIDI editable}
 
-La etapa final del workflow consiste en el pipeline de salida, responsable de la síntesis y codificación de la matriz filtrada en un archivo de formato estándar MIDI (SMF, tipo 0 o tipo 1). Este proceso es implementado por la función \texttt{matrix\_to\_midi} dentro del módulo \texttt{midi\_processor.py}, utilizando la biblioteca de manipulación de mensajes de hardware \texttt{mido}.
+La etapa final del workflow consiste en el pipeline de salida, responsable de la síntesis y codificación de la matriz filtrada en un archivo de formato estándar MIDI (SMF, tipo 0 o tipo 1). Este proceso es implementado por la función \texttt{matrix\_to\_midi} dentro del módulo \texttt{procesador\_midi.py}, utilizando la biblioteca de manipulación de mensajes de hardware \texttt{mido}.
 
 El pipeline opera de forma inversa a la adquisición de datos, reconstruyendo la trayectoria de alturas absolutas mediante un acumulador lineal. La conversión de la matriz $\mathbf{M}'$ al flujo MIDI físico se realiza según los siguientes pasos lógicos:
 \begin{enumerate}

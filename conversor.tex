@@ -2,16 +2,16 @@
 
 La piedra angular de la presente investigación reside en la transición de un modelo de datos basado en eventos absolutos —típico de los sistemas de Inteligencia Artificial que operan sobre el estándar MIDI tradicional— hacia un paradigma de representación matricial relativa. Esta formalización no busca meramente codificar la altura de las notas, sino capturar la semántica subyacente de la armonía funcional y la jerarquía tonal. 
 
-Como se observa en el desarrollo del módulo \texttt{midi\_processor.py}, la música no se trata como una sucesión estadística de números de nota (0-127), sino como un sistema de relaciones vectoriales. La importancia de este enfoque radica en la \textit{invarianza tonal}: la capacidad de un modelo de aprendizaje profundo para reconocer una progresión armónica o una línea melódica independientemente de la tónica en la que se ejecute. Según \cite{tymoczko2011}, la música occidental se organiza en espacios geométricos donde la proximidad no es solo acústica, sino funcional; nuestra representación matricial formaliza esta proximidad mediante el cálculo dinámico de grados y distancias interválicas.
+Como se observa en el desarrollo del módulo \texttt{procesador\_midi.py}, la música no se trata como una sucesión estadística de números de nota (0-127), sino como un sistema de relaciones vectoriales. La importancia de este enfoque radica en la \textit{invarianza tonal}: la capacidad de un modelo de aprendizaje profundo para reconocer una progresión armónica o una línea melódica independientemente de la tónica en la que se ejecute. Según \cite{tymoczko2011}, la música occidental se organiza en espacios geométricos donde la proximidad no es solo acústica, sino funcional; nuestra representación matricial formaliza esta proximidad mediante el cálculo dinámico de grados y distancias interválicas.
 
 \subsection{Abstracción de datos: Del evento absoluto al vector relativo}
 
 El proceso de abstracción comienza con la deconstrucción del archivo MIDI. Mientras que el estándar MIDI define una nota mediante un entero absoluto $p \in [0, 127]$, nuestro sistema descompone esta variable en dos componentes críticos: la \textbf{Clase de Altura} (\textit{Pitch Class}) y el \textbf{Grado Escalar}.
 
-En el código fuente de \texttt{midi\_processor.py}, esta abstracción se materializa en la extracción inicial de la clase de altura mediante la operación de módulo:
+En el código fuente de \texttt{procesador\_midi.py}, esta abstracción se materializa en la extracción inicial de la clase de altura mediante la operación de módulo:
 
 \begin{verbatim}
-# Extracción de la clase de altura en midi_processor.py
+# Extracción de la clase de altura en procesador_midi.py
 midi_pitch = note['pitch']
 pitch_class = midi_pitch % 12
 row.append(float(pitch_class))
@@ -62,7 +62,7 @@ def get_scale_degree(pitch_class, root_note, scale_intervals):
     # ... (manejo de bordes)
 \end{verbatim}
 
-Adicionalmente, se integra el cálculo de la \textbf{distancia interválica relativa} entre notas consecutivas. Esta columna de la matriz permite que el algoritmo genético evalúe la "suavidad" de la conducción de voces (\textit{voice leading}). En \texttt{midi\_processor.py}, el intervalo se normaliza a unidades de tono (donde 0.5 es un semitono), alineándose con la teoría de \cite{chew2014mathematical} sobre el modelado matemático de la tensión melódica:
+Adicionalmente, se integra el cálculo de la \textbf{distancia interválica relativa} entre notas consecutivas. Esta columna de la matriz permite que el algoritmo genético evalúe la "suavidad" de la conducción de voces (\textit{voice leading}). En \texttt{procesador\_midi.py}, el intervalo se normaliza a unidades de tono (donde 0.5 es un semitono), alineándose con la teoría de \cite{chew2014mathematical} sobre el modelado matemático de la tensión melódica:
 
 \begin{verbatim}
 # Cálculo de intervalo relativo en tonos
