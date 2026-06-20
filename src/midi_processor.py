@@ -151,9 +151,9 @@ def matrix_to_midi(matrix, output_path='output.mid', start_note=60, bpm=120):
         mid_pitch = max(0, min(127, int(current_pitch)))
         
         # 3. Crear eventos MIDI
-        # Note On
+        # Nota Encendida (Note On)
         track.append(mido.Message('note_on', note=mid_pitch, velocity=64, time=0))
-        # Note Off (el tiempo delta va aquí para dar la duración)
+        # Nota Apagada (Note Off - el tiempo delta va aquí para dar la duración)
         track.append(mido.Message('note_off', note=mid_pitch, velocity=64, time=duration_ticks))
         
     mid.save(output_path)
@@ -165,10 +165,10 @@ def create_test_midi(filename='test_output.mid'):
     track = mido.MidiTrack()
     mid.tracks.append(track)
     
-    # Ticks per beat default es 480 usually
+    # Ticks por pulso por defecto es usualmente 480
     ticks_per_beat = 480
     mid.ticks_per_beat = ticks_per_beat
-    # 1/16 note = 120 ticks
+    # Nota de un dieciseisavo (semicorchea) = 120 ticks
     sixteenth = int(ticks_per_beat / 4)
     
     # Notas: C, D, D#, E (Do, Re, Re# (no diatónico), Mi)
@@ -182,9 +182,9 @@ def create_test_midi(filename='test_output.mid'):
     
     current_time = 0
     for pitch, duration in notes:
-        # Note On
+        # Nota Encendida (Note On)
         track.append(mido.Message('note_on', note=pitch, velocity=64, time=0))
-        # Note Off (delta time = duration)
+        # Nota Apagada (Note Off - tiempo delta = duración)
         track.append(mido.Message('note_off', note=pitch, velocity=64, time=duration))
         
     mid.save(filename)
@@ -197,8 +197,8 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Convertir MIDI a Matriz Numérica (4 columnas).')
     parser.add_argument('file', nargs='?', help='Ruta al archivo MIDI de entrada')
-    parser.add_argument('--root', default='C', help='Nota tónica de la escala (ej: C, G, F#). Default: C')
-    parser.add_argument('--scale', default='major', help='Tipo de escala (major). Default: major')
+    parser.add_argument('--root', default='C', help='Nota tónica de la escala (ej: C, G, F#). Por defecto: C')
+    parser.add_argument('--scale', default='major', help='Tipo de escala (major). Por defecto: major')
     parser.add_argument('--test', action='store_true', help='Generar y procesar archivo de prueba')
     parser.add_argument('--convert-back', help='Ruta para guardar el MIDI reconvertido (prueba inversa)')
 
@@ -231,7 +231,7 @@ if __name__ == "__main__":
             
         if args.convert_back:
             print(f"\nReconstruyendo MIDI en: {args.convert_back}")
-            # Usamos la primera nota del MIDI original si es posible, sino 60 (Middle C)
+            # Usamos la primera nota del MIDI original si es posible, sino 60 (Do central)
             # Como la matriz no guarda la octava absoluta, el resultado puede estar transpuesto.
             matrix_to_midi(result_matrix, output_path=args.convert_back, start_note=60)
             

@@ -1,0 +1,73 @@
+\section{Optimización Evolutiva}
+
+La generación de material musical mediante inteligencia artificial a menudo se enfrenta al problema de la formalización objetiva de la estética. Mientras que la precisión técnica de una red neuronal puede medirse mediante pérdidas matemáticas tradicionales, las cualidades expresivas y estilísticas del arte son esquivas a las métricas computacionales puras. Para solventar este distanciamiento entre la cuantificación algorítmica y la valoración artística, se integra un Algoritmo Genético Interactivo (IGA, por sus siglas en inglés). Esta técnica evolutiva incorpora al compositor directamente en el bucle de optimización ("`human-in-the-loop`"), utilizando la preferencia humana como la función de aptitud o \textit{fitness} que guía el proceso selectivo y dirige la convergencia de la población hacia territorios melódicos estéticamente satisfactorios.
+
+El ciclo evolutivo del algoritmo propuesto sigue un flujo estructurado de cinco etapas:
+\begin{enumerate}
+    \item \textbf{Inicialización:} Se genera una población inicial de 10 cromosomas (matrices de melodía) de forma aleatoria, bajo las restricciones diatónicas básicas de la tonalidad y modo seleccionados.
+    \item \textbf{Evaluación y Selección Interactiva:} El usuario analiza las melodías representadas simbólicamente y selecciona de forma directa aquellos individuos que se alinean con sus preferencias estéticas.
+    \text{Backup de Generación:} Las matrices seleccionadas y el resto de la población se guardan en un registro histórico indexado temporalmente para permitir auditorías y retrocesos.
+    \item \textbf{Cruce (Crossover):} Se eligen aleatoriamente parejas de padres del grupo seleccionado y se recombinan para heredar estructuras motivacionales a los descendientes.
+    \item \textbf{Mutación:} Se introducen perturbaciones estocásticas localizadas en los genes de altura y duración rítmica, asegurando la diversidad genotípica y evitando la convergencia prematura.
+\end{enumerate}
+
+\subsection{Definición del cromosoma}
+
+En el contexto de este algoritmo, el genotipo de cada individuo melódico se codifica mediante un cromosoma matricial $\mathbf{M} \in \mathbb{R}^{N \times 4}$, donde $N$ representa la longitud de la melodía expresada en número de notas consecutivas. Cada locus $j \in \{0, 1, \dots, N-1\}$ dentro del cromosoma representa un gen compuesto por cuatro alelos específicos que determinan la física de la nota musical:
+\begin{equation}
+    \mathbf{g}_j = \big[ pc_j, d_j, deg_j, int_j \big]
+\end{equation}
+
+Los alelos que componen cada gen se definen teóricamente a continuación:
+\begin{itemize}
+    \item \textbf{Clase de Altura ($pc_j \in \mathbb{Z}_{12}$):} Primer alelo, codificado como un entero modular que representa la nota musical en el temperamento igual de doce tonos. Captura la identidad absoluta de la nota en la octava base (ej. $0$ para Do, $7$ para Sol).
+    \item \textbf{Duración Rítmica ($d_j \in \mathbb{R}^+$):} Segundo alelo, codificado como un valor real que representa la magnitud temporal del evento musical en unidades relativas, tomando como unidad base ($1.00$) la duración de una semicorchea o un pulso de subdivisión del reloj.
+    \item \textbf{Grado Escalar ($deg_j \in \mathbb{R}$):} Tercer alelo, que indica el valor armónico relativo de la nota dentro de la escala activa. Es un número que identifica si la nota es diatónica estricta (ej. $1.0, 2.0, \dots$) o si presenta alteraciones cromáticas intermedias (ej. $1.5, 2.5$).
+    \item \textbf{Intervalo Relativo ($int_j \in \mathbb{R}$):} Cuarto alelo, que describe la diferencia de altura en tonos entre la nota actual y la nota precedente. Este gen es fundamental para capturar el perfil de alturas o contorno melódico de la secuencia musical.
+\end{itemize}
+
+Esta estructura matricial híbrida destaca por su capacidad de representar de forma simultánea tanto las propiedades absolutas del evento musical ($pc_j, d_j$) como sus relaciones estructurales y gramaticales respecto al entorno y el tiempo ($deg_j, int_j$). Esto dota al cromosoma de una gran robustez frente a las operaciones de cruce y mutación, manteniendo la coherencia interna de los datos.
+
+\subsection{Operadores genéticos: Cruce y mutación aplicados a la notación simbólica}
+
+Los operadores de cruce y mutación son los encargados de guiar la exploración en el espacio de diseño melódico. En el sistema desarrollado, estos operadores se han adaptado de forma estricta a la notación simbólica y matricial del modelo.
+
+El operador de cruce (crossover) hereda la estructura formal de las melodías progenitoras dividiendo las matrices en un punto de corte aleatorio. Dadas dos matrices progenitoras seleccionadas por el usuario, $\mathbf{P}_A$ y $\mathbf{P}_B$, el operador selecciona uniformemente un índice de nota $k \in \{1, 2, \dots, N-2\}$ y ensambla al hijo $\mathbf{H}$ según la ecuación:
+\begin{equation}
+    \mathbf{H} = \begin{bmatrix} \mathbf{P}_A[0 \dots k-1] \\ \mathbf{P}_B[k \dots N-1] \end{bmatrix}
+\end{equation}
+Este cruzamiento de bloque único permite preservar los pequeños motivos melódicos de $k$ notas provenientes del progenitor A, y la resolución temática o sección final proveniente del progenitor B, imitando de esta forma el desarrollo musical formal por frases.
+
+El operador de mutación introduce variaciones estocásticas controladas en los alelos de altura y duración rítmica con una probabilidad de mutación de $p_m$. Para asegurar que la variación tenga sentido biológico y no genere atonalidad, el operador de mutación implementa las siguientes reglas específicas sobre los genes de la nota $j$:
+\begin{itemize}
+    \item \textbf{Mutación Rítmica:} Si se selecciona el alelo de duración $d_j$, se modifica su valor por otro miembro seleccionado al azar de la escala de subdivisiones convencionales:
+    \begin{equation}
+        d_j \leftarrow \text{random\_choice}(\{0.25, 0.50, 0.75, 1.00, 1.50, 2.00, 3.00, 4.00\})
+    \end{equation}
+    \item \textbf{Mutación de Altura Localizada:} Si el alelo de altura $pc_j$ es seleccionado, se escoge aleatoriamente una nueva clase de altura diatónica $pc'_j$ dentro de la escala activa $\mathcal{D}_{T,M}$. Para evitar que este cambio desplace de manera absoluta e indeseada todo el perfil de alturas de la melodía que le sigue, se ejecuta un ajuste interválico localizado. 
+    
+    Sea $\delta_n$ la distancia en semitonos normalizada más corta en la octava entre $pc'_j$ y $pc_j$. Se actualiza la clase de altura $pc_j \leftarrow pc'_j$ y se re-calcula su grado diatónico $deg_j$. Para absorber el salto localmente y que no se propague, se modifica el gen de intervalo del evento actual sumando el incremento de tonos:
+    \begin{equation}
+        int_j \leftarrow int_j + \frac{\delta_n}{2}
+    \end{equation}
+    Y se resta exactamente el mismo incremento al gen de intervalo de la nota siguiente:
+    \begin{equation}
+        int_{j+1} \leftarrow int_{j+1} - \frac{\delta_n}{2}
+    \end{equation}
+    Este par de correcciones contrapuestas cancela el desplazamiento acumulativo de tonos aguas abajo, manteniendo fija la afinación absoluta del resto de la melodía y encapsulando el efecto de la mutación a un único evento melódico.
+\end{itemize}
+
+\subsection{Interfaz de usuario para la selección de parámetros}
+
+Para habilitar la interacción entre el compositor humano y el algoritmo genético, se desarrolla una interfaz interactiva de consola. Esta interfaz permite al usuario definir las bases físicas y armónicas del espacio de búsqueda antes de dar inicio al ciclo evolutivo de selección.
+
+La interfaz de usuario implementa las siguientes funciones operativas principales:
+\begin{enumerate}
+    \item \textbf{Entrada de Parámetros de Escala:} Solicita al usuario definir la tónica tonal y la escala diatónica base. El usuario introduce valores enteros para la tónica ($1 \le T \le 12$, mapeados de Do a Si) y para el modo griego ($1 \le M \le 7$, mapeados de Jónico a Locrio). Esto configura la matriz de intervalos modales activos.
+    \item \textbf{Visualización de Individuos en Tiempo Real:} Lee los archivos de texto correspondientes a los 10 individuos de la población y los parsea a una notación simbólica simplificada de notas y duraciones relativas (ej. $C(0.25) \to D(0.50) \to F(1.00)$). Esto permite al compositor leer y previsualizar de forma rápida el contorno de alturas y el ritmo de cada candidato.
+    \item \textbf{Captura de Retroalimentación Estética:} Presenta una lista numerada del $1$ al $10$. El compositor introduce mediante una entrada separada por comas los índices de los individuos que desea seleccionar como padres de la siguiente generación (ej. `1,3,6`).
+    \item \textbf{Gestión de Archivo Histórico:} Al ingresar la selección, la interfaz crea un subdirectorio con la fecha y hora actuales en la subcarpeta `historial/` y clona las 10 matrices previas. Esta base de datos temporal asegura la trazabilidad del proceso creativo y permite el análisis de la deriva genética inducida por las decisiones artísticas del usuario.
+    \item \textbf{Evolución y Escritura Automatizada:} Con base en los padres seleccionados, el sistema ejecuta el crossover y la mutación localizada, escribe los 10 nuevos archivos resultantes en `matrices_entrada/individuo_X.txt` reemplazando los anteriores y prepara la consola para la siguiente generación evolutiva.
+\end{enumerate}
+
+Este diseño interactivo desacopla la formulación matemática de los operadores evolutivos de la experiencia directa del usuario. Permite al músico interactuar directamente con la teoría contrapuntística y melódica de forma simbólica y creativa, guiando la deriva de las secuencias generadas hacia resultados estilísticamente valiosos y personalizados.

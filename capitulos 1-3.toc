@@ -18,37 +18,35 @@
 \contentsline {subsubsection}{Modos griegos o modos eclesiásticos medievales}{28}{section*.8}%
 \contentsline {subsubsection}{Conclusión}{29}{section*.9}%
 \contentsline {subsection}{\numberline {2.1.3}Espacios geométricos musicales y conducción de voces}{29}{subsection.2.1.3}%
-\contentsline {section}{\numberline {2.2}Representación de Datos en IA Musical}{32}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Representaciones Absolutas vs. Relativas}{32}{subsection.2.2.1}%
+\contentsline {section}{\numberline {2.2}Representación de Datos en IA Musical}{33}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Representaciones Absolutas vs. Relativas}{33}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}El concepto de Representación Matricial Relativa de Armonía Funcional}{36}{subsection.2.2.2}%
-\contentsline {section}{\numberline {2.3}Inteligencia artíficial para la generación musical}{39}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Redes neuronales como generadores musicales estocasticos}{39}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Árboles de Decisión como filtros de restricción armónica}{43}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.3}Inteligencia artíficial para la generación musical}{40}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Redes neuronales como generadores musicales estocasticos}{40}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Árboles de Decisión como filtros de restricción armónica}{44}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}Algoritmos Genéticos aplicados a las preferencias del usuario}{47}{subsection.2.3.3}%
-\contentsline {section}{\numberline {2.4}Estado de la generación musical}{50}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Modelos generativos contemporáneos}{50}{subsection.2.4.1}%
-\contentsline {chapter}{\numberline {3}Metodología}{54}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Enfoque de la Investigación}{54}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Tipo de estudio: Investigación y Desarrollo}{54}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Fases del desarrollo del sistema}{55}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Formalización de la Representación Matricial Relativa}{56}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Abstracción de datos: Del evento absoluto al vector relativo}{57}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Algoritmo de mapeo de funciones armónicas y distancias interválicas}{58}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Normalización y preparación del dataset para el entrenamiento}{60}{subsection.3.2.3}%
-\contentsline {section}{\numberline {3.3}Diseño del Núcleo Generativo}{61}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Arquitectura de la red neuronal}{62}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Capas paramétricas enlazadas a genes}{62}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Definición de la capa de salida}{63}{subsection.3.3.3}%
+\contentsline {section}{\numberline {2.4}Estado de la generación musical}{51}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Modelos generativos contemporáneos}{51}{subsection.2.4.1}%
+\contentsline {chapter}{\numberline {3}Metodología}{55}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Enfoque de la Investigación}{55}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Tipo de estudio: Investigación y Desarrollo}{55}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Fases del desarrollo del sistema}{56}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Formalización de la Representación Matricial Relativa}{57}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Abstracción de datos: Del evento absoluto al vector relativo}{58}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Algoritmo de mapeo de funciones armónicas y distancias interválicas}{59}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Normalización y preparación del dataset para el entrenamiento}{61}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Diseño del Núcleo Generativo}{62}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Arquitectura de la red neuronal}{63}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Capas paramétricas enlazadas a genes}{63}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Definición de la capa de salida}{64}{subsection.3.3.3}%
 \contentsline {section}{\numberline {3.4}Implementación de Filtros Deterministas}{64}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Codificación de reglas de contrapunto estricto (1ra a 4ta especie)}{64}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Lógica de poda y validación de secuencias candidatas}{64}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Interfaz de parametrización: Tonalidad, Modo y Métrica}{64}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}Optimización Evolutiva}{64}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Definición del cromosoma: Representación de la estructura musical y estilo}{64}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Operadores genéticos: Cruce y mutación aplicados a la notación simbólica}{64}{subsection.3.5.2}%
-\contentsline {section}{\numberline {3.6}Integración de la Arquitectura y Workflow}{64}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Comunicación entre módulos}{64}{subsection.3.6.1}%
-\contentsline {subsection}{\numberline {3.6.2}Pipeline de salida: Generación del archivo MIDI editable}{64}{subsection.3.6.2}%
-\contentsline {section}{\numberline {3.7}Estrategia de Validación y Pruebas}{64}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}Definición de métricas de error armónico}{64}{subsection.3.7.1}%
-\contentsline {subsection}{\numberline {3.7.2}Diseño de los experimentos comparativos}{64}{subsection.3.7.2}%
+\contentsline {subsection}{\numberline {3.4.1}Codificación de tonalidades, modos e inducción de mutaciones}{66}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Lógica de poda y validación de secuencias candidatas}{70}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Interfaz de parametrización: Tonalidad y modo}{73}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Optimización Evolutiva}{74}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Definición del cromosoma}{75}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Operadores genéticos: Cruce y mutación aplicados a la notación simbólica}{77}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Interfaz de usuario para la selección de parámetros}{78}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Integración de la Arquitectura y Workflow}{80}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Comunicación entre módulos}{80}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Pipeline de salida: Generación del archivo MIDI editable}{81}{subsection.3.6.2}%

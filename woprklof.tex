@@ -1,0 +1,45 @@
+\section{Integración de la Arquitectura y Workflow}
+
+La arquitectura del sistema propuesto se integra mediante un flujo de trabajo modular ("`workflow`"), estructurado en cuatro capas diferenciadas: la capa de adquisición e interpretación de datos, la capa generativa probabilística, la capa simbólica determinista y la capa evolutiva interactiva. Este diseño desacoplado permite aislar el procesamiento de señales físicas (archivos MIDI), la optimización matemática de redes profundas, la aplicación normativa de restricciones de armonía y la selección heurística basada en las preferencias estéticas del compositor. 
+
+La integración formal del flujo de trabajo sigue una secuencia lineal y cíclica. En primer lugar, los datos del conjunto de entrenamiento son pre-procesados para su consumo por el modelo recurrente. Seguidamente, el compositor utiliza el algoritmo genético interactivo para guiar la deriva genotípica de las melodías candidatas. Las matrices seleccionadas por el compositor sirven de entrada y estímulo para la red neuronal recurrente, la cual propone nuevas secuencias de notas de forma autónoma. Finalmente, estas secuencias son tamizadas y corregidas en tiempo real por el filtro del árbol de decisión determinista, asegurando su coherencia antes de su exportación al pipeline de salida.
+
+\subsection{Comunicación entre módulos}
+
+La comunicación y transferencia de información entre los distintos componentes de la arquitectura se efectúa mediante una estructura de datos unificada: una matriz numérica bidimensional implementada como un arreglo de NumPy. Esta matriz posee una topología fija de $N \times 4$, donde cada fila representa un evento musical y las columnas corresponden a las variables relativas de nota, duración, grado de la escala e intervalo. Al utilizar la matriz como protocolo común de comunicación, se elimina la necesidad de serializaciones complejas o conversiones redundantes de formatos, garantizando la compatibilidad inmediata entre módulos escritos bajo distintos paradigmas.
+
+El protocolo de transferencia de datos se describe según los siguientes flujos de comunicación entre archivos:
+\begin{itemize}
+    \item \textbf{De Señal Física a Matriz de Datos:} El módulo \texttt{midi\_processor.py} analiza los archivos MIDI de entrada almacenados en el directorio \texttt{datos\_entrada/}, extrayendo los eventos de encendido (\textit{Note On}) y apagado (\textit{Note Off}). Convierte estos datos en matrices numéricas relativas compatibles con el optimizador y la red.
+    \item \textbf{De Población Evolutiva a Datos de Entrenamiento:} El script \texttt{genetic\_optimizer.py} inicializa y evoluciona la población de cromosomas matriciales, guardando cada individuo de forma independiente en archivos de texto en la carpeta \texttt{matrices\_entrada/}.
+    \item \textbf{De Matriz de Entrada a Red Neuronal:} El generador melódico \texttt{melody\_generator.py} importa \texttt{network\_builder.py} para construir la red recurrente a partir de la configuración matricial cargada desde \texttt{arquitectura\_tensor.txt}. Consume las matrices evolucionadas para entrenar el modelo y proponer nuevas predicciones.
+    \item \textbf{De Predicción Estocástica a Validación Simbólica:} La matriz resultante de la red se transfiere directamente al módulo \texttt{decision_tree_filter.py}, donde es evaluada secuencialmente para corregir saltos melódicos o cromatismos no permitidos.
+    \item \textbf{De Matriz Validada a Señal Física:} La matriz corregida por el árbol se transfiere de vuelta a \texttt{midi\_processor.py} para su conversión final en archivos MIDI ejecutables.
+\end{itemize}
+
+\subsection{Pipeline de salida: Generación del archivo MIDI editable}
+
+La etapa final del workflow consiste en el pipeline de salida, responsable de la síntesis y codificación de la matriz filtrada en un archivo de formato estándar MIDI (SMF, tipo 0 o tipo 1). Este proceso es implementado por la función \texttt{matrix\_to\_midi} dentro del módulo \texttt{midi\_processor.py}, utilizando la biblioteca de manipulación de mensajes de hardware \texttt{mido}.
+
+El pipeline opera de forma inversa a la adquisición de datos, reconstruyendo la trayectoria de alturas absolutas mediante un acumulador lineal. La conversión de la matriz $\mathbf{M}'$ al flujo MIDI físico se realiza según los siguientes pasos lógicos:
+\begin{enumerate}
+    \item \textbf{Inicialización del Tempo:} Se escribe un mensaje de metadatos de tempo al inicio del track MIDI, mapeando los microsegundos por pulso en función del parámetro de velocidad $BPM$ seleccionado por el usuario (ej. $120$ BPM).
+    \item \textbf{Reconstrucción de Altura Absoluta (Pitch):} La primera nota de la melodía toma como referencia inicial un tono absoluto central (generalmente Do central, nota MIDI $60$). Para cada fila $j$, el sistema recupera la columna de intervalo relativo $int_j$ (expresado en tonos) y calcula la diferencia de semitonos enteros redondeando el valor escalado por dos:
+    \begin{equation}
+        \Delta_{\text{semitonos}} = \text{round}(int_j \times 2)
+    \end{equation}
+    La nota absoluta actual se obtiene sumando este incremento acumulado:
+    \begin{equation}
+        P_j = P_{j-1} + \Delta_{\text{semitonos}}
+    \end{equation}
+    El valor de altura resultante se clampa al rango estándar MIDI $\{0, \dots, 127\}$.
+    
+    \item \textbf{Cálculo de Ticks Temporales:} El valor decimal de la duración relativas de semicorchea $d_j$ se multiplica por la resolución de ticks del reloj de sincronización del archivo (ticks per beat, por defecto $480$):
+    \begin{equation}
+        \text{ticks}_j = \text{int}\left( d_j \times \frac{\text{ticks\_per\_beat}}{4} \right)
+    \end{equation}
+    
+    \item \textbf{Generación de Eventos Físicos:} Se inserta un evento de Nota Encendida (\textit{Note On}) con velocidad fija de pulsación (ej. $64$). Inmediatamente después, con un delta de tiempo correspondiente a $\text{ticks}_j$, se añade un evento de Nota Apagada (\textit{Note Off}), delimitando la duración de la nota de forma precisa en el secuenciador.
+\end{enumerate}
+
+Este pipeline genera dos archivos MIDI independientes: \texttt{melodia\_generada\_ia\_cruda.mid} (melodía estocástica cruda de la red) y \texttt{melodia\_generada\_ia\_filtrada.mid} (melodía estructurada y corregida). Ambos archivos son completamente editables en cualquier estación de trabajo de audio digital (DAW) o software de notación musical, cerrando el ciclo entre computación y composición práctica.

@@ -9,6 +9,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{csquotes}
+\usepackage{float}
 
 \geometry{letterpaper, margin=1in}
 
@@ -994,7 +995,7 @@ Esto permite realizar una \textit{normalización tonal activa}: durante el entre
 
 \begin{verbatim}
 # Estructura final de la fila de la matriz para entrenamiento
-# [PitchClass, DurationUnits, ScaleDegree, IntervalTones]
+# [PitchClass, DurationUnits, ScaleDegree, IntervalTones]\end{algorithmic}
 result_matrix = midi_to_matrix(target_file, root_note_name='C', scale_type='major')
 \end{verbatim}
 
@@ -1028,21 +1029,350 @@ Estos parámetros permiten que el algoritmo genético, mencionado en el planteam
 La capa de salida consiste en una capa densa con un número de unidades igual a \texttt{NUM\_FEATURES} (4). A diferencia de los modelos de clasificación categórica comunes en la generación de texto, esta capa utiliza una activación lineal para realizar una \textbf{regresión multivariada}. Los cuatro valores continuos resultantes representan la predicción del próximo evento en el espacio paramétrico definido. Este diseño permite una mayor fluidez en la generación de duraciones e intervalos, los cuales son posteriormente post-procesados y cuantizados por el sistema de reglas para asegurar su validez dentro de la teoría musical convencional.
 
 \section{Implementación de Filtros Deterministas}
-\subsection{Codificación de reglas de contrapunto estricto (1ra a 4ta especie)}
+
+En los sistemas contemporáneos de composición automatizada e inteligencia artificial aplicada a la música, uno de los desafíos teóricos y prácticos más significativos radica en la conciliación del comportamiento estocástico y creativo de los modelos de aprendizaje profundo con las restricciones normativas y formales descritas por la teoría musical clásica. Las redes neuronales profundas, tales como las redes de memoria a corto y largo plazo (LSTM) o los modelos basados en mecanismos de atención (Transformers), demuestran una capacidad sobresaliente para aprender representaciones complejas, transiciones de probabilidad y estilos a partir de corpus masivos de datos. Sin embargo, al estar fundamentadas en optimizaciones probabilísticas y de mínimos cuadrados (tales como la pérdida del error cuadrático medio, MSE), estas redes carecen intrínsecamente de un mecanismo determinista para garantizar el cumplimiento de restricciones rígidas (`hard constraints`). 
+
+Por ejemplo, una red neuronal entrenada para la generación melódica puede sugerir un intervalo de novena menor o una nota extremadamente disonante fuera de la escala base simplemente porque la distribución de probabilidad local del modelo de lenguaje musical presentaba un residuo estocástico propicio en dicho punto. Si bien este comportamiento puede ser tolerado en contextos de improvisación libre o música contemporánea no tonal, resulta inaceptable bajo los marcos de la armonía tonal académica y el contrapunto estricto, donde errores como la resolución incorrecta de disonancias o la existencia de saltos melódicos no cantables invalidan la estructura de la pieza.
+
+Para resolver esta limitación, el presente trabajo introduce una arquitectura híbrida de carácter neurosimbólico, estructurada en múltiples capas. En esta arquitectura, el componente de aprendizaje profundo (la red neuronal generativa parametrizada) actúa como un motor creativo de exploración libre que propone secuencias de notas candidatas con base en el estilo aprendido del conjunto de datos. Simultáneamente, el componente simbólico, constituido por un filtro determinista estructurado como un árbol de decisión parametrizable, interviene en la salida del modelo generativo. Este árbol actúa como un validador normativo de tipo "`hard constraint satisfaction`" (satisfacción de restricciones duras) que evalúa y modifica localmente la secuencia musical antes de su codificación en formato MIDI.
+
+El ciclo dinámico de inferencia y post-procesamiento híbrido se formaliza de la siguiente manera. Sea una melodía candidata generada por la red neuronal expresada como una matriz $\mathbf{M} \in \mathbb{R}^{N \times 4}$, donde cada fila $j \in \{0, 1, \dots, N-1\}$ representa un evento musical compuesto por el vector:
+\begin{equation}
+    \mathbf{v}_j = [pc_j, d_j, deg_j, int_j]
+\end{equation}
+Donde $pc_j$ es la clase de altura (pitch class), $d_j$ es la duración temporal en unidades relativas de semicorchea, $deg_j$ representa el grado relativo a la escala activa, y $int_j$ es el intervalo en tonos respecto a la nota inmediatamente anterior. La matriz pasa a través de la función de filtrado determinista del árbol de decisión $f_{\text{árbol}}: \mathbb{R}^{N \times 4} \to \mathbb{R}^{N \times 4}$, la cual evalúa y corrige las desviaciones respecto a los límites teóricos parametrizados por el usuario. 
+
+A diferencia de los enfoques tradicionales de generación restringida, los cuales descartan por completo las secuencias que no cumplen con los requisitos mínimos (lo que genera un costo computacional inasumible debido a la continua re-generación estocástica), el árbol de decisión propuesto opera bajo una estrategia de "reparación local". El árbol identifica el punto exacto de la desviación normativa y aplica una corrección matemática directa sobre la nota conflictiva y sus vecindades. Esto preserva la coherencia temática del modelo neuronal mientras asegura el cumplimiento inequívoco de las leyes de la teoría armónica.
+
+\subsection{Codificación de tonalidades, modos e inducción de mutaciones}
+
+Para parametrizar matemáticamente el comportamiento del filtro y del algoritmo genético, se requiere una formalización algebraica estricta del espacio de alturas y modos musicales. La clase de alturas (pitch class) se modela sobre el anillo cociente $\mathbb{Z}_{12} = \{0, 1, 2, \dots, 11\}$, donde cada entero representa una nota musical del temperamento igual, tomando a Do ($C$) como el origen de coordenadas $0$:
+\begin{equation}
+    C \equiv 0, \quad C\# \equiv 1, \quad D \equiv 2, \quad \dots, \quad B \equiv 11
+\end{equation}
+
+La tónica de la escala se codifica mediante un parámetro entero $T \in \{1, 2, \dots, 12\}$, el cual se transforma linealmente al espacio $\mathbb{Z}_{12}$ a través de la función de proyección:
+\begin{equation}
+    t_0 = (T - 1) \pmod{12}
+\end{equation}
+Esta tónica sirve como el origen tonal absoluto de la composición.
+
+Los modos eclesiásticos o modos griegos diatónicos se codifican mediante un parámetro de modo $M \in \{1, 2, \dots, 7\}$. Cada modo $M$ se define matemáticamente como un conjunto ordenado de siete intervalos relativos $\mathcal{I}_M = \{i_0, i_1, \dots, i_6\} \subset \mathbb{Z}_{12}$ que representan las distancias en semitonos desde el centro tonal $t_0$. Los modos se estructuran algebraicamente según los siguientes vectores de intervalos:
+\begin{align}
+    \mathcal{I}_1 \text{ (Jónico)} &= \{0, 2, 4, 5, 7, 9, 11\} \\
+    \mathcal{I}_2 \text{ (Dórico)} &= \{0, 2, 3, 5, 7, 9, 10\} \\
+    \mathcal{I}_3 \text{ (Frigio)} &= \{0, 1, 3, 5, 7, 8, 10\} \\
+    \mathcal{I}_4 \text{ (Lidio)} &= \{0, 2, 4, 6, 7, 9, 11\} \\
+    \mathcal{I}_5 \text{ (Mixolidio)} &= \{0, 2, 4, 5, 7, 9, 10\} \\
+    \mathcal{I}_6 \text{ (Eólico)} &= \{0, 2, 3, 5, 7, 8, 10\} \\
+    \mathcal{I}_7 \text{ (Locrio)} &= \{0, 1, 3, 5, 6, 8, 10\}
+\end{align}
+
+Dado un par de parámetros $(T, M)$, la escala diatónica activa en el sistema se denota como el conjunto $\mathcal{D}_{T,M} \subset \mathbb{Z}_{12}$, definido formalmente como la traslación del conjunto de intervalos modales respecto a la tónica:
+\begin{equation}
+    \mathcal{D}_{T,M} = \{ (t_0 + i) \pmod{12} \mid i \in \mathcal{I}_M \}
+\end{equation}
+
+Una nota representada por una clase de altura $pc$ se define como diatónica si y solo si $pc \in \mathcal{D}_{T,M}$. En caso contrario, se define como una nota cromática o no diatónica.
+
+En el marco evolutivo del sistema, el algoritmo genético interactivo opera sobre una población de cromosomas. Cada cromosoma es una matriz de melodía $\mathbf{M}$ de dimensiones $N \times 4$. La optimización de la red neuronal y la búsqueda de trayectorias melódicas estéticas dependen de los operadores genéticos de cruce y mutación aplicados a estas matrices. 
+
+El operador de cruce (crossover) recibe dos matrices progenitoras $\mathbf{P}_A, \mathbf{P}_B \in \mathbb{R}^{N \times 4}$ y genera un hijo $\mathbf{H} \in \mathbb{R}^{N \times 4}$ mediante un corte de punto único. Sea $k \in \{1, 2, \dots, N-2\}$ un punto de corte aleatorio. El hijo resultante se construye mediante la concatenación vertical:
+\begin{equation}
+    \mathbf{H} = \begin{bmatrix} \mathbf{P}_A[0 \dots k-1] \\ \mathbf{P}_B[k \dots N-1] \end{bmatrix}
+\end{equation}
+
+El operador de mutación introduce variabilidad en el cromosoma con una probabilidad por gen de $p_m$. Para asegurar que las mutaciones generen individuos que posean sentido biológico y técnico para la red neuronal recurrente, las mutaciones se especializan de acuerdo a las características físicas del parámetro alterado:
+\begin{enumerate}
+    \item \textbf{Mutación de la Duración ($d_j$):} Si el parámetro rítmico de la nota en la posición $j$ es seleccionado para mutar, su valor se altera aleatoriamente sustituyéndose por un elemento del conjunto discreto de duraciones musicales válidas:
+    \begin{equation}
+        d_j \in \mathcal{U}_{\text{duraciones}} = \{0.25, 0.50, 0.75, 1.00, 1.50, 2.00, 3.00, 4.00\}
+    \end{equation}
+    Este conjunto discreto representa subdivisiones que van desde la semicorchea ($0.25$) hasta la redonda ($4.00$) en términos relativos, asegurando la consistencia rítmica de la partitura.
+    
+    \item \textbf{Mutación de la Altura ($pc_j$) con sentido estructural:} Si la altura de la nota en la posición $j$ muta, el sistema selecciona de manera uniforme un nuevo valor de clase de altura $pc'_j \in \mathcal{D}_{T,M}$. La asignación directa de una nota arbitraria destruiría la coherencia interválica local de la melodía y generaría saltos melódicos no deseados de gran amplitud. Para evitar este efecto, se calcula la diferencia en semitonos $\delta \in \mathbb{Z}$ entre la nueva nota y la nota antigua:
+    \begin{equation}
+        \delta = pc'_j - pc_j
+    \end{equation}
+    Esta diferencia se normaliza al intervalo diatónico más corto mediante:
+    \begin{equation}
+        \delta_n = \begin{cases} \delta - 12 & \text{si } \delta > 6 \\ \delta + 12 & \text{si } \delta \le -6 \\ \delta & \text{en otro caso} \end{cases}
+    \end{equation}
+    
+    Para inducir la mutación de forma que "haga sentido" al codificador y al decodificador matricial, el algoritmo actualiza localmente tres variables de la matriz de forma simultánea:
+    \begin{itemize}
+        \item La clase de altura del gen mutado se actualiza: $pc_j \leftarrow pc'_j$.
+        \item El grado de la escala se re-calcula usando la función de correspondencia diatónica: $deg_j \leftarrow g(pc'_j, t_0, \mathcal{I}_M)$.
+        \item Se ajustan de forma balanceada las relaciones interválicas adyacentes para encapsular la mutación. El intervalo en tonos del evento actual se incrementa sumando la mitad de la desviación de semitonos:
+        \begin{equation}
+            int_j \leftarrow int_j + \frac{\delta_n}{2}
+        \end{equation}
+        Para evitar que esta alteración desplace de forma absoluta e indeseada todas las notas subsiguientes de la melodía (lo que arruinaría la progresión temática previa), se sustrae exactamente la misma cantidad al intervalo de la siguiente nota:
+        \begin{equation}
+            int_{j+1} \leftarrow int_{j+1} - \frac{\delta_n}{2}
+        \end{equation}
+        Si $j = N-1$ (la última nota de la secuencia), solo se altera $int_j$. Este mecanismo de conservación garantiza la preservación del contorno de alturas absoluto aguas abajo de la mutación.
+    \end{itemize}
+\end{enumerate}
+
 \subsection{Lógica de poda y validación de secuencias candidatas}
-\subsection{Interfaz de parametrización: Tonalidad, Modo y Métrica}
+
+El proceso de validación y poda de las melodías candidatas propuestas por el modelo estocástico se efectúa de manera secuencial a través de un árbol de decisión determinista. Este árbol analiza cada evento melódico y sus relaciones interválicas previas para detectar violaciones a las restricciones tonales y de conducción de voces.
+
+En la teoría de conducción de voces y contrapunto, los intervalos musicales se clasifican rigurosamente por su amplitud física en semitonos absolutos $\Delta = |p_t - p_{t-1}|$:
+\begin{itemize}
+    \item \textbf{Paso o Grado Conjunto (Step):} Movimiento de $1$ o $2$ semitonos (segunda menor o segunda mayor). Representa la máxima suavidad melódica.
+    \item \textbf{Salto Corto (Skip):} Movimiento de $3$ o $4$ semitonos (tercera menor o tercera mayor). Introduce una tensión moderada pero fluida.
+    \item \textbf{Salto Largo (Leap):} Movimiento de $5$ o más semitonos (cuarta justa, quinta justa o mayores). Introduce una gran tensión y debe resolverse de forma contraria para mantener la cantabilidad.
+\end{itemize}
+
+El árbol de decisión opera sobre la secuencia melódica aplicando un algoritmo recursivo de validación. La lógica interna de este árbol se describe mediante la secuencia de pruebas lógicas y ramificaciones condicionales estructuradas a continuación:
+
+\begin{verbatim}
+\caption{Algoritmo del Árbol de Decisión para Corrección de Melodías}
+\begin{algorithmic}[1]
+\REQUIRE Matriz de melodía original $\mathbf{M}$, parámetros $T, M, \text{max\_skips}, \text{max\_leaps}, \text{max\_non\_diatonic}$
+\ENSURE Matriz de melodía filtrada y corregida $\mathbf{M}'$
+\STATE Obtener la escala diatónica activa $\mathcal{D}_{T,M}$ y la tónica $t_0$.
+\STATE Inicializar contadores: $c_{\text{crom}} \leftarrow 0$, $c_{\text{skips}} \leftarrow 0$, $c_{\text{leaps}} \leftarrow 0$.
+\STATE Reconstruir las alturas MIDI absolutas $P = \{p_0, p_1, \dots, p_{N-1}\}$ a partir de la columna de intervalos de $\mathbf{M}$.
+\FOR{$i = 0$ \TO $N-1$}
+    \STATE $pc \leftarrow p_i \pmod{12}$
+    \COMMENT{\textbf{Nodo de Decisión 1: Diatonicidad}}
+    \IF{$pc \notin \mathcal{D}_{T,M}$}
+        \COMMENT{\textbf{Nodo de Decisión 2: Límite Cromático}}
+        \IF{$c_{\text{crom}} \ge \text{max\_non\_diatonic}$}
+            \STATE Modificar $p_i \leftarrow \text{get\_nearest\_diatonic}(p_i, \mathcal{D}_{T,M})$
+            \STATE Actualizar $pc \leftarrow p_i \pmod{12}$
+        \ELSE
+            \STATE $c_{\text{crom}} \leftarrow c_{\text{crom}} + 1$
+        \ENDIF
+    \ENDIF
+    \IF{$i > 0$}
+        \STATE $\text{intervalo} \leftarrow p_i - p_{i-1}$
+        \STATE $\Delta \leftarrow |\text{intervalo}|$
+        \COMMENT{\textbf{Nodo de Decisión 3: Clasificación de Saltos}}
+        \IF{$\Delta \in \{3, 4\}$}
+            \COMMENT{\textbf{Nodo de Decisión 4: Límite de Skips}}
+            \IF{$c_{\text{skips}} \ge \text{max\_skips}$}
+                \STATE $\text{dirección} \leftarrow \text{signo}(\text{intervalo})$
+                \STATE $\text{step\_size} \leftarrow \text{diatonic\_step}(p_{i-1}, \text{dirección}, \mathcal{D}_{T,M})$
+                \STATE $p_i \leftarrow p_{i-1} + \text{dirección} \times \text{step\_size}$
+                \STATE Asegurar $p_i$ diatónico.
+            \ELSE
+                \STATE $c_{\text{skips}} \leftarrow c_{\text{skips}} + 1$
+            \ENDIF
+        \ELSIF{$\Delta \ge 5$}
+            \COMMENT{\textbf{Nodo de Decisión 5: Límite de Leaps}}
+            \IF{$c_{\text{leaps}} \ge \text{max\_leaps}$}
+                \STATE $\text{dirección} \leftarrow \text{signo}(\text{intervalo})$
+                \COMMENT{\textbf{Intento de degradación suave a Skip}}
+                \IF{$c_{\text{skips}} < \text{max\_skips}$}
+                    \STATE $p_i \leftarrow p_{i-1} + \text{dirección} \times 3$
+                    \IF{$p_i \pmod{12} \notin \mathcal{D}_{T,M}$}
+                        \STATE $p_i \leftarrow p_{i-1} + \text{dirección} \times 4$
+                    \ENDIF
+                    \STATE Asegurar $p_i$ diatónico.
+                    \STATE $c_{\text{skips}} \leftarrow c_{\text{skips}} + 1$
+                \ELSE
+                    \COMMENT{\textbf{Forzar reducción estricta a Step}}
+                    \STATE $\text{step\_size} \leftarrow \text{diatonic\_step}(p_{i-1}, \text{dirección}, \mathcal{D}_{T,M})$
+                    \STATE $p_i \leftarrow p_{i-1} + \text{dirección} \times \text{step\_size}$
+                    \STATE Asegurar $p_i$ diatónico.
+                \ENDIF
+            \ELSE
+                \STATE $c_{\text{leaps}} \leftarrow c_{\text{leaps}} + 1$
+            \ENDIF
+        \ENDIF
+    \ENDIF
+\ENDFOR
+\STATE Re-calcular los parámetros de la matriz $\mathbf{M}'$ basándose en las nuevas alturas corregidas $P$.
+\RETURN $\mathbf{M}'$
+\end{verbatim}
+
+La función $\text{diatonic\_step}(pitch, dir, \text{escala})$ calcula la distancia al siguiente grado de la escala en la dirección indicada. Si la escala activa requiere un movimiento de $2$ semitonos, la función retorna $2$. Si el grado diatónico se encuentra a una distancia de segunda menor, retorna $1$.
+
+Este mecanismo de poda asegura que si la red neuronal propone una melodía que salta abruptamente de forma repetida (ej. una sucesión de quintas y octavas disjuntas), el árbol de decisión interviene y "poda" la curva melódica, aproximando las notas a pasos diatónicos más cercanos. La validación se realiza de forma secuencial y cronológica para imitar el proceso humano de corrección y revisión melódica.
+
+\subsection{Interfaz de parametrización: Tonalidad y modo}
+
+El control creativo del sistema híbrido se canaliza mediante una interfaz de parametrización interactiva que actúa sobre los umbrales lógicos del árbol de decisión y los operadores evolutivos. Esta parametrización otorga al usuario un control exhaustivo sobre el nivel de disonancia, la agilidad de los saltos y el rigor estructural del material generado. 
+
+La parametrización se gestiona de forma interactiva y permite regular las siguientes restricciones fundamentales:
+\begin{table}[H]
+\centering
+\caption{Parámetros de la interfaz condicional del filtro armónico.}
+\label{tab:harmonic-filter-parameters}
+
+\begin{tabular}{|l|c|p{8cm}|}
+\hline
+\textbf{Parámetro} &
+\textbf{Rango de Entrada} &
+\textbf{Efecto en la Salida Melódica}
+\\ \hline
+
+\texttt{tonic} &
+$1 \leq T \leq 12$ &
+Define el centro tonal absoluto de la composición.
+\\ \hline
+
+\texttt{greek\_mode} &
+$1 \leq M \leq 7$ &
+Selecciona la distribución intervalar diatónica correspondiente al modo griego.
+\\ \hline
+
+\texttt{max\_skips} &
+$\geq 0$ &
+Controla la cantidad máxima de intervalos de tercera (3 o 4 semitonos).
+\\ \hline
+
+\texttt{max\_leaps} &
+$\geq 0$ &
+Controla la cantidad máxima de saltos amplios ($\geq 5$ semitonos).
+\\ \hline
+
+\texttt{max\_non\_diatonic} &
+$\geq 0$ &
+Regula la presencia de notas cromáticas o alteraciones accidentales.
+\\ \hline
+
+\end{tabular}
+\end{table}
+
+
+La interacción de estos parámetros define el comportamiento del sistema en un continuo que va desde la rigidez académica hasta la experimentación libre:
+\begin{itemize}
+    \item \textbf{Configuración de Contrapunto Estricto:} Si el usuario parametriza $\text{max\_non\_diatonic} = 0$, $\text{max\_leaps} = 0$ y $\text{max\_skips} = 2$, el árbol de decisión podará de forma agresiva cualquier intento del modelo neuronal de realizar cromatismos o saltos melódicos pronunciados. El resultado será una melodía suave, principalmente por grados conjuntos, muy alineada con el estilo vocal del Renacimiento y las reglas de conducción clásicas.
+    
+    \item \textbf{Configuración de Expresividad Cromática Moderada:} Al relajar los parámetros a $\text{max\_non\_diatonic} = 3$, $\text{max\_skips} = 5$ y $\text{max\_leaps} = 2$, el árbol de decisión amplía su umbral de tolerancia. Esto permite la aparición controlada de notas accidentales de paso y saltos expresivos (ej. intervalos de quinta o sexta justa), dotando a la melodía de una estética más cercana al romanticismo o al jazz modal, sin llegar a colapsar en la atonalidad desorganizada.
+\end{itemize}
+
+Esta modularidad demuestra que la arquitectura neurosimbólica no limita la expresividad artística de la red neuronal. Por el contrario, la encauza mediante un conjunto dinámico de directrices técnicas controladas por el compositor. Esto permite al investigador explorar diferentes estilos musicales y regular de manera precisa el equilibrio entre la exploración probabilística del modelo recurrente y la explotación normativa del sistema de reglas simbólicas.
 
 \section{Optimización Evolutiva}
-\subsection{Definición del cromosoma: Representación de la estructura musical y estilo}
+
+La generación de material musical mediante inteligencia artificial a menudo se enfrenta al problema de la formalización objetiva de la estética. Mientras que la precisión técnica de una red neuronal puede medirse mediante pérdidas matemáticas tradicionales, las cualidades expresivas y estilísticas del arte son esquivas a las métricas computacionales puras. Para solventar este distanciamiento entre la cuantificación algorítmica y la valoración artística, se integra un Algoritmo Genético Interactivo (IGA, por sus siglas en inglés). Esta técnica evolutiva incorpora al compositor directamente en el bucle de optimización ("`human-in-the-loop`"), utilizando la preferencia humana como la función de aptitud o \textit{fitness} que guía el proceso selectivo y dirige la convergencia de la población hacia territorios melódicos estéticamente satisfactorios.
+
+El ciclo evolutivo del algoritmo propuesto sigue un flujo estructurado de cinco etapas:
+\begin{enumerate}
+    \item \textbf{Inicialización:} Se genera una población inicial de 10 cromosomas (matrices de melodía) de forma aleatoria, bajo las restricciones diatónicas básicas de la tonalidad y modo seleccionados.
+    \item \textbf{Evaluación y Selección Interactiva:} El usuario analiza las melodías representadas simbólicamente y selecciona de forma directa aquellos individuos que se alinean con sus preferencias estéticas.
+    \text{Backup de Generación:} Las matrices seleccionadas y el resto de la población se guardan en un registro histórico indexado temporalmente para permitir auditorías y retrocesos.
+    \item \textbf{Cruce (Crossover):} Se eligen aleatoriamente parejas de padres del grupo seleccionado y se recombinan para heredar estructuras motivacionales a los descendientes.
+    \item \textbf{Mutación:} Se introducen perturbaciones estocásticas localizadas en los genes de altura y duración rítmica, asegurando la diversidad genotípica y evitando la convergencia prematura.
+\end{enumerate}
+
+\subsection{Definición del cromosoma}
+
+En el contexto de este algoritmo, el genotipo de cada individuo melódico se codifica mediante un cromosoma matricial $\mathbf{M} \in \mathbb{R}^{N \times 4}$, donde $N$ representa la longitud de la melodía expresada en número de notas consecutivas. Cada locus $j \in \{0, 1, \dots, N-1\}$ dentro del cromosoma representa un gen compuesto por cuatro alelos específicos que determinan la física de la nota musical:
+\begin{equation}
+    \mathbf{g}_j = \big[ pc_j, d_j, deg_j, int_j \big]
+\end{equation}
+
+Los alelos que componen cada gen se definen teóricamente a continuación:
+\begin{itemize}
+    \item \textbf{Clase de Altura ($pc_j \in \mathbb{Z}_{12}$):} Primer alelo, codificado como un entero modular que representa la nota musical en el temperamento igual de doce tonos. Captura la identidad absoluta de la nota en la octava base (ej. $0$ para Do, $7$ para Sol).
+    \item \textbf{Duración Rítmica ($d_j \in \mathbb{R}^+$):} Segundo alelo, codificado como un valor real que representa la magnitud temporal del evento musical en unidades relativas, tomando como unidad base ($1.00$) la duración de una semicorchea o un pulso de subdivisión del reloj.
+    \item \textbf{Grado Escalar ($deg_j \in \mathbb{R}$):} Tercer alelo, que indica el valor armónico relativo de la nota dentro de la escala activa. Es un número que identifica si la nota es diatónica estricta (ej. $1.0, 2.0, \dots$) o si presenta alteraciones cromáticas intermedias (ej. $1.5, 2.5$).
+    \item \textbf{Intervalo Relativo ($int_j \in \mathbb{R}$):} Cuarto alelo, que describe la diferencia de altura en tonos entre la nota actual y la nota precedente. Este gen es fundamental para capturar el perfil de alturas o contorno melódico de la secuencia musical.
+\end{itemize}
+
+Esta estructura matricial híbrida destaca por su capacidad de representar de forma simultánea tanto las propiedades absolutas del evento musical ($pc_j, d_j$) como sus relaciones estructurales y gramaticales respecto al entorno y el tiempo ($deg_j, int_j$). Esto dota al cromosoma de una gran robustez frente a las operaciones de cruce y mutación, manteniendo la coherencia interna de los datos.
+
 \subsection{Operadores genéticos: Cruce y mutación aplicados a la notación simbólica}
 
+Los operadores de cruce y mutación son los encargados de guiar la exploración en el espacio de diseño melódico. En el sistema desarrollado, estos operadores se han adaptado de forma estricta a la notación simbólica y matricial del modelo.
+
+El operador de cruce (crossover) hereda la estructura formal de las melodías progenitoras dividiendo las matrices en un punto de corte aleatorio. Dadas dos matrices progenitoras seleccionadas por el usuario, $\mathbf{P}_A$ y $\mathbf{P}_B$, el operador selecciona uniformemente un índice de nota $k \in \{1, 2, \dots, N-2\}$ y ensambla al hijo $\mathbf{H}$ según la ecuación:
+\begin{equation}
+    \mathbf{H} = \begin{bmatrix} \mathbf{P}_A[0 \dots k-1] \\ \mathbf{P}_B[k \dots N-1] \end{bmatrix}
+\end{equation}
+Este cruzamiento de bloque único permite preservar los pequeños motivos melódicos de $k$ notas provenientes del progenitor A, y la resolución temática o sección final proveniente del progenitor B, imitando de esta forma el desarrollo musical formal por frases.
+
+El operador de mutación introduce variaciones estocásticas controladas en los alelos de altura y duración rítmica con una probabilidad de mutación de $p_m$. Para asegurar que la variación tenga sentido biológico y no genere atonalidad, el operador de mutación implementa las siguientes reglas específicas sobre los genes de la nota $j$:
+\begin{itemize}
+    \item \textbf{Mutación Rítmica:} Si se selecciona el alelo de duración $d_j$, se modifica su valor por otro miembro seleccionado al azar de la escala de subdivisiones convencionales:
+    \begin{equation}
+        d_j \leftarrow \text{random\_choice}(\{0.25, 0.50, 0.75, 1.00, 1.50, 2.00, 3.00, 4.00\})
+    \end{equation}
+    \item \textbf{Mutación de Altura Localizada:} Si el alelo de altura $pc_j$ es seleccionado, se escoge aleatoriamente una nueva clase de altura diatónica $pc'_j$ dentro de la escala activa $\mathcal{D}_{T,M}$. Para evitar que este cambio desplace de manera absoluta e indeseada todo el perfil de alturas de la melodía que le sigue, se ejecuta un ajuste interválico localizado. 
+    
+    Sea $\delta_n$ la distancia en semitonos normalizada más corta en la octava entre $pc'_j$ y $pc_j$. Se actualiza la clase de altura $pc_j \leftarrow pc'_j$ y se re-calcula su grado diatónico $deg_j$. Para absorber el salto localmente y que no se propague, se modifica el gen de intervalo del evento actual sumando el incremento de tonos:
+    \begin{equation}
+        int_j \leftarrow int_j + \frac{\delta_n}{2}
+    \end{equation}
+    Y se resta exactamente el mismo incremento al gen de intervalo de la nota siguiente:
+    \begin{equation}
+        int_{j+1} \leftarrow int_{j+1} - \frac{\delta_n}{2}
+    \end{equation}
+    Este par de correcciones contrapuestas cancela el desplazamiento acumulativo de tonos aguas abajo, manteniendo fija la afinación absoluta del resto de la melodía y encapsulando el efecto de la mutación a un único evento melódico.
+\end{itemize}
+
+\subsection{Interfaz de usuario para la selección de parámetros}
+
+Para habilitar la interacción entre el compositor humano y el algoritmo genético, se desarrolla una interfaz interactiva de consola. Esta interfaz permite al usuario definir las bases físicas y armónicas del espacio de búsqueda antes de dar inicio al ciclo evolutivo de selección.
+
+La interfaz de usuario implementa las siguientes funciones operativas principales:
+\begin{enumerate}
+    \item \textbf{Entrada de Parámetros de Escala:} Solicita al usuario definir la tónica tonal y la escala diatónica base. El usuario introduce valores enteros para la tónica ($1 \leq T \leq 12$, mapeados de Do a Si) y para el modo griego ($1 \leq M \leq 7$, mapeados de Jónico a Locrio). Esto configura la matriz de intervalos modales activos.
+
+    \item \textbf{Visualización de Individuos en Tiempo Real:} Lee los archivos de texto correspondientes a los 10 individuos de la población y los convierte a una notación simbólica simplificada de notas y duraciones relativas (por ejemplo, $C(0.25)\rightarrow D(0.50)\rightarrow F(1.00)$). Esto permite al compositor leer y previsualizar rápidamente el contorno melódico y el ritmo de cada candidato.
+
+    \item \textbf{Captura de Retroalimentación Estética:} Presenta una lista numerada del 1 al 10. El compositor introduce, mediante una entrada separada por comas, los índices de los individuos que desea seleccionar como padres de la siguiente generación (por ejemplo, \texttt{1,3,6}).
+
+    \item \textbf{Gestión de Archivo Histórico:} Al ingresar la selección, la interfaz crea un subdirectorio con la fecha y hora actuales dentro de la carpeta \texttt{historial/} y copia las 10 matrices de la generación previa. Esta base de datos temporal asegura la trazabilidad del proceso creativo y permite analizar la deriva genética inducida por las decisiones artísticas del usuario.
+
+    \item \textbf{Evolución y Escritura Automatizada:} Con base en los padres seleccionados, el sistema ejecuta los operadores de cruce y mutación localizada. Posteriormente, escribe los 10 nuevos individuos en archivos con formato \texttt{matrices\_entrada/individuo\_X.txt}, reemplazando los anteriores y preparando el entorno para la siguiente generación evolutiva.
+\end{enumerate}
+
+Este diseño interactivo desacopla la formulación matemática de los operadores evolutivos de la experiencia directa del usuario. Permite al músico interactuar directamente con la teoría contrapuntística y melódica de forma simbólica y creativa, guiando la deriva de las secuencias generadas hacia resultados estilísticamente valiosos y personalizados.
+
 \section{Integración de la Arquitectura y Workflow}
+
+La arquitectura del sistema propuesto se integra mediante un flujo de trabajo modular ("`workflow`"), estructurado en cuatro capas diferenciadas: la capa de adquisición e interpretación de datos, la capa generativa probabilística, la capa simbólica determinista y la capa evolutiva interactiva. Este diseño desacoplado permite aislar el procesamiento de señales físicas (archivos MIDI), la optimización matemática de redes profundas, la aplicación normativa de restricciones de armonía y la selección heurística basada en las preferencias estéticas del compositor. 
+
+La integración formal del flujo de trabajo sigue una secuencia lineal y cíclica. En primer lugar, los datos del conjunto de entrenamiento son pre-procesados para su consumo por el modelo recurrente. Seguidamente, el compositor utiliza el algoritmo genético interactivo para guiar la deriva genotípica de las melodías candidatas. Las matrices seleccionadas por el compositor sirven de entrada y estímulo para la red neuronal recurrente, la cual propone nuevas secuencias de notas de forma autónoma. Finalmente, estas secuencias son tamizadas y corregidas en tiempo real por el filtro del árbol de decisión determinista, asegurando su coherencia antes de su exportación al pipeline de salida.
+
 \subsection{Comunicación entre módulos}
+
+La comunicación y transferencia de información entre los distintos componentes de la arquitectura se efectúa mediante una estructura de datos unificada: una matriz numérica bidimensional implementada como un arreglo de NumPy. Esta matriz posee una topología fija de $N \times 4$, donde cada fila representa un evento musical y las columnas corresponden a las variables relativas de nota, duración, grado de la escala e intervalo. Al utilizar la matriz como protocolo común de comunicación, se elimina la necesidad de serializaciones complejas o conversiones redundantes de formatos, garantizando la compatibilidad inmediata entre módulos escritos bajo distintos paradigmas.
+
+El protocolo de transferencia de datos se describe según los siguientes flujos de comunicación entre archivos:
+\begin{itemize}
+    \item \textbf{De Señal Física a Matriz de Datos:} El módulo \texttt{midi\_processor.py} analiza los archivos MIDI de entrada almacenados en el directorio \texttt{datos\_entrada/}, extrayendo los eventos de encendido (\textit{Note On}) y apagado (\textit{Note Off}). Convierte estos datos en matrices numéricas relativas compatibles con el optimizador y la red.
+    \item \textbf{De Población Evolutiva a Datos de Entrenamiento:} El script \texttt{genetic\_optimizer.py} inicializa y evoluciona la población de cromosomas matriciales, guardando cada individuo de forma independiente en archivos de texto en la carpeta \texttt{matrices\_entrada/}.
+    \item \textbf{De Matriz de Entrada a Red Neuronal:} El generador melódico \texttt{melody\_generator.py} importa \texttt{network\_builder.py} para construir la red recurrente a partir de la configuración matricial cargada desde \texttt{arquitectura\_tensor.txt}. Consume las matrices evolucionadas para entrenar el modelo y proponer nuevas predicciones.
+    \item \textbf{De Predicción Estocástica a Validación Simbólica:} La matriz resultante de la red se transfiere directamente al módulo \texttt{decision\_tree\_filter.py}, donde es evaluada secuencialmente para corregir saltos melódicos o cromatismos no permitidos.
+    \item \textbf{De Matriz Validada a Señal Física:} La matriz corregida por el árbol se transfiere de vuelta a \texttt{midi\_processor.py} para su conversión final en archivos MIDI ejecutables.
+\end{itemize}
+
 \subsection{Pipeline de salida: Generación del archivo MIDI editable}
 
-\section{Estrategia de Validación y Pruebas}
-\subsection{Definición de métricas de error armónico}
-\subsection{Diseño de los experimentos comparativos}
+La etapa final del workflow consiste en el pipeline de salida, responsable de la síntesis y codificación de la matriz filtrada en un archivo de formato estándar MIDI (SMF, tipo 0 o tipo 1). Este proceso es implementado por la función \texttt{matrix\_to\_midi} dentro del módulo \texttt{midi\_processor.py}, utilizando la biblioteca de manipulación de mensajes de hardware \texttt{mido}.
+
+El pipeline opera de forma inversa a la adquisición de datos, reconstruyendo la trayectoria de alturas absolutas mediante un acumulador lineal. La conversión de la matriz $\mathbf{M}'$ al flujo MIDI físico se realiza según los siguientes pasos lógicos:
+\begin{enumerate}
+    \item \textbf{Inicialización del Tempo:} Se escribe un mensaje de metadatos de tempo al inicio del track MIDI, mapeando los microsegundos por pulso en función del parámetro de velocidad $BPM$ seleccionado por el usuario (ej. $120$ BPM).
+    \item \textbf{Reconstrucción de Altura Absoluta (Pitch):} La primera nota de la melodía toma como referencia inicial un tono absoluto central (generalmente Do central, nota MIDI $60$). Para cada fila $j$, el sistema recupera la columna de intervalo relativo $int_j$ (expresado en tonos) y calcula la diferencia de semitonos enteros redondeando el valor escalado por dos:
+    \begin{equation}
+        \Delta_{\text{semitonos}} = \text{round}(int_j \times 2)
+    \end{equation}
+    La nota absoluta actual se obtiene sumando este incremento acumulado:
+    \begin{equation}
+        P_j = P_{j-1} + \Delta_{\text{semitonos}}
+    \end{equation}
+    El valor de altura resultante se clampa al rango estándar MIDI $\{0, \dots, 127\}$.
+    
+    \item \textbf{Cálculo de Ticks Temporales:} El valor decimal de la duración relativas de semicorchea $d_j$ se multiplica por la resolución de ticks del reloj de sincronización del archivo (ticks per beat, por defecto $480$):
+    \begin{equation}
+        \text{ticks}_j = \text{int}\left( d_j \times \frac{\text{ticks\_per\_beat}}{4} \right)
+    \end{equation}
+    
+    \item \textbf{Generación de Eventos Físicos:} Se inserta un evento de Nota Encendida (\textit{Note On}) con velocidad fija de pulsación (ej. $64$). Inmediatamente después, con un delta de tiempo correspondiente a $\text{ticks}_j$, se añade un evento de Nota Apagada (\textit{Note Off}), delimitando la duración de la nota de forma precisa en el secuenciador.
+\end{enumerate}
+
+Este pipeline genera dos archivos MIDI independientes: \texttt{melodia\_generada\_ia\_cruda.mid} (melodía estocástica cruda de la red) y \texttt{melodia\_generada\_ia\_filtrada.mid} (melodía estructurada y corregida). Ambos archivos son completamente editables en cualquier estación de trabajo de audio digital (DAW) o software de notación musical, cerrando el ciclo entre computación y composición práctica.
+
 
 
 \bibliographystyle{unsrt}
